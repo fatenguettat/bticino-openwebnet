@@ -9,7 +9,7 @@
 		</layout>
 	</appender>
 
-	<appender name="Jtext" class="org.apache.log4j.contrib.JTextAreaAppender">
+	<appender name="Jtext" class="it.incalza.bt.openwebnet.client.TextAreaAppender">
 		<param name="Target" value="it.incalza.bt.openwebnet.client.KeyEventDemo.displayArea" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
@@ -18,7 +18,7 @@
 
 
 	<appender name="protocolOwn" class="org.apache.log4j.FileAppender">
-		<param name="File" value="./target/logs-test/protocol-own.log" />
+		<param name="File" value="./target/logs-test/client.log" />
 		<param name="Append" value="true" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-5p %d (%F:%L) [%M] %m%n" />
