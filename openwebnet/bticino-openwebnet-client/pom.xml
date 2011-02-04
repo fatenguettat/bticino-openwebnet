@@ -8,9 +8,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.incalza</groupId>
 	<artifactId>bticino-openwebnet-client</artifactId>
-	<version>0.0.1</version>
+	<version>${project.parent.version}</version>
 	<name>Bticino Client Open Web Net</name>
 	<description>Bticino Client Open Web Net</description>
+	<dependencies>
+		<dependency>
+			<groupId>it.incalza</groupId>
+			<artifactId>bticino-openwebnet-protocol</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<plugins>
 			<plugin>
@@ -21,19 +28,21 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.4.3</version>
-				<configuration>
-					<systemProperties>
-						<property>
-							<name>log4j.configuration</name>
-							<value>log4j.xml</value>
-						</property>
-					</systemProperties>
-				</configuration>
-			</plugin>
+			
+			
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-surefire-plugin</artifactId>-->
+<!--				<version>2.4.3</version>-->
+<!--				<configuration>-->
+<!--					<systemProperties>-->
+<!--						<property>-->
+<!--							<name>log4j.configuration</name>-->
+<!--							<value>log4j.xml</value>-->
+<!--						</property>-->
+<!--					</systemProperties>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
 </project>

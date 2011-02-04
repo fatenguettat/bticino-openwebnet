@@ -25,6 +25,7 @@
 		<junit.version>4.8.2</junit.version>
 		<log4j.version>1.2.12</log4j.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -45,6 +46,50 @@
 			<optional>false</optional>
 		</dependency>
 	</dependencies>
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>java</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includeProjectDependencies>false</includeProjectDependencies>
+					<includePluginDependencies>true</includePluginDependencies>
+					<executableDependency>
+						<groupId>it.incalza</groupId>
+						<artifactId>bticino-openwebnet-client</artifactId>
+					</executableDependency>
+					<mainClass>it.incalza.bt.openwebnet.client.KeyEventDemo</mainClass>
+<!--					<arguments>-->
+<!--						<argument>argument1</argument>-->
+<!--					</arguments>-->
+<!--					<systemProperties>-->
+<!--						<systemProperty>-->
+<!--							<key>myproperty</key>-->
+<!--							<value>myvalue</value>-->
+<!--						</systemProperty>-->
+<!---->
+<!--					</systemProperties>-->
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>it.incalza</groupId>
+						<artifactId>bticino-openwebnet-protocol</artifactId>
+						<version>${project.version}</version>
+						<type>jar</type>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
 	<repositories>
 		<repository>
 			<id>repository.maven</id>
