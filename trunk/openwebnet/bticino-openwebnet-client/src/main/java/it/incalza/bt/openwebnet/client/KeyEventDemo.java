@@ -29,7 +29,10 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 
 	private static final long serialVersionUID = -4949580537359166179L;
 	private static final Logger logger = Logger.getLogger(KeyEventDemo.class);
-	static JTextArea displayArea;
+	public JTextArea displayArea;
+
+	
+
 	JTextField typingArea;
 	static boolean stopSend;
 	static final String newline = System.getProperty("line.separator");
@@ -196,48 +199,49 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 		{
 			int keyCode = e.getKeyCode();
 			keyString = "key code = " + keyCode + " (" + KeyEvent.getKeyText(keyCode) + ")";
-
-			if (KeyEvent.getKeyText(keyCode).equals(COMANDO_1))
+			if (keyStatus.startsWith("KEY RELEASED"))
 			{
-				logger.info("#### COMANDO_1 LETTO ####");
-				Client.getInstance().sendComand(Client.LUCE_DEMO_1);
+				if (KeyEvent.getKeyText(keyCode).equals(COMANDO_1))
+				{
+					logger.info("#### COMANDO_1 LETTO ####");
+					Client.getInstance().sendComand(Client.LUCE_DEMO_1);
+				}
+				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_2))
+				{
+					logger.info("#### COMANDO_2 LETTO ####");
+					Client.getInstance().sendComand(Client.LUCE_DEMO_2);
+				}
+				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_3))
+				{
+					logger.info("#### COMANDO_3 LETTO ####");
+					Client.getInstance().sendComand(Client.LUCE_DEMO_3);
+				}
+				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_4))
+				{
+					logger.info("#### COMANDO_4 LETTO ####");
+					Client.getInstance().sendComand(Client.LUCE_DEMO_4);
+				}
+				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_5))
+				{
+					logger.info("#### COMANDO_5 LETTO ####");
+					Client.getInstance().sendComand(Client.LUCE_DEMO_5);
+				}
+				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_6))
+				{
+					logger.info("#### COMANDO_6 LETTO ####");
+					Client.getInstance().sendComand(Client.LUCE_DEMO_6);
+				}
+				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_7))
+				{
+					logger.info("#### COMANDO_7 LETTO ####");
+					Client.getInstance().sendComand(Client.LUCE_DEMO_7);
+				}
+				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_8))
+				{
+					logger.info("#### COMANDO_8 LETTO ####");
+					Client.getInstance().sendComand(Client.LUCE_DEMO_8);
+				}
 			}
-			else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_2))
-			{
-				logger.info("#### COMANDO_2 LETTO ####");
-				Client.getInstance().sendComand(Client.LUCE_DEMO_2);
-			}
-			else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_3))
-			{
-				logger.info("#### COMANDO_3 LETTO ####");
-				Client.getInstance().sendComand(Client.LUCE_DEMO_3);
-			}
-			else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_4))
-			{
-				logger.info("#### COMANDO_4 LETTO ####");
-				Client.getInstance().sendComand(Client.LUCE_DEMO_4);
-			}
-			else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_5))
-			{
-				logger.info("#### COMANDO_5 LETTO ####");
-				Client.getInstance().sendComand(Client.LUCE_DEMO_5);
-			}
-			else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_6))
-			{
-				logger.info("#### COMANDO_6 LETTO ####");
-				Client.getInstance().sendComand(Client.LUCE_DEMO_6);
-			}
-			else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_7))
-			{
-				logger.info("#### COMANDO_7 LETTO ####");
-				Client.getInstance().sendComand(Client.LUCE_DEMO_7);
-			}
-			else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_8))
-			{
-				logger.info("#### COMANDO_8 LETTO ####");
-				Client.getInstance().sendComand(Client.LUCE_DEMO_8);
-			}
-
 		}
 
 		int modifiersEx = e.getModifiersEx();
