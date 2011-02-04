@@ -6,10 +6,12 @@ import org.apache.log4j.Logger;
 public class Client
 {
 
-	public static final String LUCE_DEMO_1 = "";
-	public static final String LUCE_DEMO_2 = "";
-	public static final String LUCE_DEMO_3 = "";
-	public static final String LUCE_DEMO_4 = "";
+//	public static final String LUCE_DEMO_1 = "*1*1*16##";
+	public static final String LUCE_DEMO_1 = "*1*1*32##";
+//	public static final String LUCE_DEMO_2 = "*1*0*16##";
+	public static final String LUCE_DEMO_2 = "*1*0*32##";
+	public static final String LUCE_DEMO_3 = "*1*1*18##";
+	public static final String LUCE_DEMO_4 = "*1*0*18##";
 	public static final String LUCE_DEMO_5 = "";
 	public static final String LUCE_DEMO_6 = "";
 	public static final String LUCE_DEMO_7 = "";

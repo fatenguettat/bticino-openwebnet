@@ -13,15 +13,16 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 {
 
-	public static final String COMANDO_1 = "";
-	public static final String COMANDO_2 = "";
-	public static final String COMANDO_3 = "";
-	public static final String COMANDO_4 = "";
+	public static final String COMANDO_1 = "w";
+	public static final String COMANDO_2 = "s";
+	public static final String COMANDO_3 = "d";
+	public static final String COMANDO_4 = "a";
 	public static final String COMANDO_5 = "";
 	public static final String COMANDO_6 = "";
 	public static final String COMANDO_7 = "";
@@ -152,19 +153,19 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 	/** Handle the key typed event from the text field. */
 	public void keyTyped(KeyEvent e)
 	{
-		displayInfo(e, "KEY TYPED: ");
+		if (stopSend == false) displayInfo(e, "KEY TYPED: ");
 	}
 
 	/** Handle the key pressed event from the text field. */
 	public void keyPressed(KeyEvent e)
 	{
-		displayInfo(e, "KEY PRESSED: ");
+		if (stopSend == false)  displayInfo(e, "KEY PRESSED: ");
 	}
 
 	/** Handle the key released event from the text field. */
 	public void keyReleased(KeyEvent e)
 	{
-		displayInfo(e, "KEY RELEASED: ");
+		if (stopSend == false)  displayInfo(e, "KEY RELEASED: ");
 	}
 
 	/** Handle the button click. */
@@ -192,58 +193,18 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 		// is a key typed event.
 		int id = e.getID();
 		String keyString;
+		String comandRecuperad = "";
 		if (id == KeyEvent.KEY_TYPED)
 		{
 			char c = e.getKeyChar();
 			keyString = "key character = '" + c + "'";
+			comandRecuperad = String.valueOf(c);
 		}
 		else
 		{
 			int keyCode = e.getKeyCode();
 			keyString = "key code = " + keyCode + " (" + KeyEvent.getKeyText(keyCode) + ")";
-			if (keyStatus.startsWith("KEY RELEASED"))
-			{
-				if (KeyEvent.getKeyText(keyCode).equals(COMANDO_1))
-				{
-					logger.info("#### COMANDO_1 LETTO ####");
-					Client.getInstance().sendComand(Client.LUCE_DEMO_1);
-				}
-				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_2))
-				{
-					logger.info("#### COMANDO_2 LETTO ####");
-					Client.getInstance().sendComand(Client.LUCE_DEMO_2);
-				}
-				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_3))
-				{
-					logger.info("#### COMANDO_3 LETTO ####");
-					Client.getInstance().sendComand(Client.LUCE_DEMO_3);
-				}
-				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_4))
-				{
-					logger.info("#### COMANDO_4 LETTO ####");
-					Client.getInstance().sendComand(Client.LUCE_DEMO_4);
-				}
-				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_5))
-				{
-					logger.info("#### COMANDO_5 LETTO ####");
-					Client.getInstance().sendComand(Client.LUCE_DEMO_5);
-				}
-				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_6))
-				{
-					logger.info("#### COMANDO_6 LETTO ####");
-					Client.getInstance().sendComand(Client.LUCE_DEMO_6);
-				}
-				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_7))
-				{
-					logger.info("#### COMANDO_7 LETTO ####");
-					Client.getInstance().sendComand(Client.LUCE_DEMO_7);
-				}
-				else if (KeyEvent.getKeyText(keyCode).equals(COMANDO_8))
-				{
-					logger.info("#### COMANDO_8 LETTO ####");
-					Client.getInstance().sendComand(Client.LUCE_DEMO_8);
-				}
-			}
+			
 		}
 
 		int modifiersEx = e.getModifiersEx();
@@ -290,8 +251,58 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 		{ // (location == KeyEvent.KEY_LOCATION_UNKNOWN)
 			locationString += "unknown";
 		}
+		
+		send(comandRecuperad, keyStatus);
 
 		logger.info(keyStatus + newline + "    " + keyString + newline + "    " + modString + newline + "    " + actionString + newline + "    " + locationString + newline);
 		// displayArea.setCaretPosition(displayArea.getDocument().getLength());
 	}
+	
+	private void send(String comandRecuperad, String keyStatus)
+	{
+		if (StringUtils.startsWithIgnoreCase(keyStatus, "KEY TYPED") && StringUtils.isNotEmpty(comandRecuperad))
+		{	
+			if (comandRecuperad.equals(COMANDO_1))
+			{
+				logger.info("#### COMANDO_1 LETTO ####");
+				Client.getInstance().sendComand(Client.LUCE_DEMO_1);
+			}
+			else if (comandRecuperad.equals(COMANDO_2))
+			{
+				logger.info("#### COMANDO_2 LETTO ####");
+				Client.getInstance().sendComand(Client.LUCE_DEMO_2);
+			}
+			else if (comandRecuperad.equals(COMANDO_3))
+			{
+				logger.info("#### COMANDO_3 LETTO ####");
+				Client.getInstance().sendComand(Client.LUCE_DEMO_3);
+			}
+			else if (comandRecuperad.equals(COMANDO_4))
+			{
+				logger.info("#### COMANDO_4 LETTO ####");
+				Client.getInstance().sendComand(Client.LUCE_DEMO_4);
+			}
+			else if (comandRecuperad.equals(COMANDO_5))
+			{
+				logger.info("#### COMANDO_5 LETTO ####");
+				Client.getInstance().sendComand(Client.LUCE_DEMO_5);
+			}
+			else if (comandRecuperad.equals(COMANDO_6))
+			{
+				logger.info("#### COMANDO_6 LETTO ####");
+				Client.getInstance().sendComand(Client.LUCE_DEMO_6);
+			}
+			else if (comandRecuperad.equals(COMANDO_7))
+			{
+				logger.info("#### COMANDO_7 LETTO ####");
+				Client.getInstance().sendComand(Client.LUCE_DEMO_7);
+			}
+			else if (comandRecuperad.equals(COMANDO_8))
+			{
+				logger.info("#### COMANDO_8 LETTO ####");
+				Client.getInstance().sendComand(Client.LUCE_DEMO_8);
+			}
+		}
+	}
+	
 }
