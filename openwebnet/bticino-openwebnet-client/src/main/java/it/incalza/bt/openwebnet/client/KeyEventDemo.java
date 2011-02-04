@@ -92,6 +92,8 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 		// Display the window.
 		frame.pack();
 		frame.setVisible(true);
+		
+		TextAreaAppender.setTextArea(frame.displayArea);
 	}
 
 	private void addComponentsToPane()
