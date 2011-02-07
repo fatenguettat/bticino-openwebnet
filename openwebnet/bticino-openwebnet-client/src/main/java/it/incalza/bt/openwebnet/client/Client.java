@@ -39,6 +39,15 @@ public class Client
 		sendComand(comand, ip, superSoket, mantieniSocket);
 	}
 	
+	public  void sendComand(String comand, boolean test)
+	{
+		if (!test)
+		{
+			sendComand(comand);
+		}
+		
+		logger.info("TEST COMANDO INVIATO " + comand);
+	}
 	
 	
 	

@@ -9,7 +9,8 @@
 		</layout>
 	</appender>
 
-	<appender name="Jtext" class="it.incalza.bt.openwebnet.client.TextAreaAppender">
+	<appender name="Jtext"
+		class="it.incalza.bt.openwebnet.client.TextAreaAppender">
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
 		</layout>
@@ -24,11 +25,16 @@
 		</layout>
 	</appender>
 
+	<logger name="it.incalza.bt.openwebnet.client.KeyEventDemo"
+		additivity="false">
+		<level value="info" />
+		<appender-ref ref="Jtext" />
+	</logger>
+
 	<root>
 		<priority value="all" />
 		<appender-ref ref="client" />
 		<appender-ref ref="console" />
-		<appender-ref ref="Jtext" />
 	</root>
 
 
