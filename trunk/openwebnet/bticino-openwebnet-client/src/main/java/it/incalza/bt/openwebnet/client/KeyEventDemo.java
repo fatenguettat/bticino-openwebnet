@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.basic.BasicSplitPaneUI.KeyboardEndHandler;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -31,7 +32,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 	private static final long serialVersionUID = -4949580537359166179L;
 	private static final Logger logger = Logger.getLogger(KeyEventDemo.class);
 	public JTextArea displayArea;
-
+	public String comandRecuperad;
 	
 
 	JTextField typingArea;
@@ -40,7 +41,6 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 
 	public static void main(String[] args)
 	{
-		/* Use an appropriate Look and Feel */
 		try
 		{
 			// UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -63,11 +63,9 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 		{
 			ex.printStackTrace();
 		}
-		/* Turn off metal's use of bold fonts */
+		
 		UIManager.put("swing.boldMetal", Boolean.FALSE);
 
-		// Schedule a job for event dispatch thread:
-		// creating and showing this application's GUI.
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
@@ -76,11 +74,6 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 		});
 	}
 
-	/**
-	 * Create the GUI and show it. For thread safety,
-	 * this method should be invoked from the
-	 * event-dispatching thread.
-	 */
 	private static void createAndShowGUI()
 	{
 		// Create and set up the window.
@@ -153,19 +146,19 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 	/** Handle the key typed event from the text field. */
 	public void keyTyped(KeyEvent e)
 	{
-		if (stopSend == false) displayInfo(e, "KEY TYPED: ");
+		if (!stopSend) displayInfo(e, "KEY TYPED: ");
 	}
 
 	/** Handle the key pressed event from the text field. */
 	public void keyPressed(KeyEvent e)
 	{
-		if (stopSend == false)  displayInfo(e, "KEY PRESSED: ");
+		if (!stopSend)  displayInfo(e, "KEY PRESSED: ");
 	}
 
 	/** Handle the key released event from the text field. */
 	public void keyReleased(KeyEvent e)
 	{
-		if (stopSend == false)  displayInfo(e, "KEY RELEASED: ");
+		if (!stopSend)  displayInfo(e, "KEY RELEASED: ");
 	}
 
 	/** Handle the button click. */
@@ -193,10 +186,9 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 		// is a key typed event.
 		int id = e.getID();
 		String keyString;
-		String comandRecuperad = "";
 		if (id == KeyEvent.KEY_TYPED)
 		{
-			char c = e.getKeyChar();
+			char c =  e.getKeyChar();
 			keyString = "key character = '" + c + "'";
 			comandRecuperad = String.valueOf(c);
 		}
@@ -251,17 +243,17 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 		{ // (location == KeyEvent.KEY_LOCATION_UNKNOWN)
 			locationString += "unknown";
 		}
-		
-		send(comandRecuperad, keyStatus);
-
+		if (e.getID() == KeyEvent.KEY_TYPED && StringUtils.isNotEmpty(comandRecuperad))
+		{	
+			sendToClient();
+		}
 		logger.info(keyStatus + newline + "    " + keyString + newline + "    " + modString + newline + "    " + actionString + newline + "    " + locationString + newline);
 		// displayArea.setCaretPosition(displayArea.getDocument().getLength());
 	}
 	
-	private void send(String comandRecuperad, String keyStatus)
+	private void sendToClient()
 	{
-		if (StringUtils.startsWithIgnoreCase(keyStatus, "KEY TYPED") && StringUtils.isNotEmpty(comandRecuperad))
-		{	
+		
 			if (comandRecuperad.equals(COMANDO_1))
 			{
 				logger.info("#### COMANDO_1 LETTO ####");
@@ -302,7 +294,7 @@ public class KeyEventDemo extends JFrame implements KeyListener, ActionListener
 				logger.info("#### COMANDO_8 LETTO ####");
 				Client.getInstance().sendComand(Client.LUCE_DEMO_8);
 			}
-		}
+		
 	}
 	
 }

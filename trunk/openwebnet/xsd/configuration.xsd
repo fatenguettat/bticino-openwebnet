@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.incalza.it/bt/openwebnet/client/configuration"    xmlns="http://www.incalza.it/bt/openwebnet/client/configuration"
+	elementFormDefault="qualified">
+
+    <xs:element name="ConfigurationCommands" type="configuration"/>
+		
+   
+	<xs:complexType name="controllerSelected">
+		 <xs:sequence>
+            <xs:element name="Name" type="xs:string" maxOccurs="1"/>
+            <xs:element name="Type" type="xs:string" maxOccurs="1"/>
+            <xs:element name="PortType" type="xs:string" maxOccurs="1"/>
+        </xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="command">
+		<xs:sequence>
+			<xs:element name="ControllerInput" type="controllerInput" maxOccurs="1"/>
+			<xs:element name="OpenWebNetComand" type="xs:string" maxOccurs="1"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="controllerInput">
+		 <xs:sequence>
+            <xs:element name="Identifier" type="xs:string" maxOccurs="1"/>
+            <xs:element name="Value" type="xs:string" maxOccurs="1"/>
+            <xs:element name="Delay" type="xs:integer" minOccurs="0" maxOccurs="1" default="0"/>
+        </xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="commands">
+		<xs:sequence>
+			<xs:element name="Command" type="command" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+    <xs:complexType name="configuration">
+        <xs:sequence>
+            <xs:element name="ControllerSelected" type="controllerSelected" maxOccurs="1"/>
+            <xs:element name="Commands" type="commands" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

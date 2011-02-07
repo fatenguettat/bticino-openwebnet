@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ConfigurationCommands
+	xmlns="http://www.incalza.it/bt/openwebnet/client/configuration">
+	<ControllerSelected>
+		<Name>SplitFish Game Controller</Name>
+		<Type>Stick</Type>
+		<PortType>USB port</PortType>
+	</ControllerSelected>
+	<Commands>
+		<Command>
+			<ControllerInput>
+				<Identifier>x</Identifier>
+				<Value>-1.0</Value>
+			</ControllerInput>
+			<OpenWebNetComand>*1*1*12##</OpenWebNetComand>
+		</Command>
+		<Command>
+			<ControllerInput>
+				<Identifier>x</Identifier>
+				<Value>1.0</Value>
+			</ControllerInput>
+			<OpenWebNetComand>*1*0*12##</OpenWebNetComand>
+		</Command>
+		<Command>
+			<ControllerInput>
+				<Identifier>y</Identifier>
+				<Value>-1.0</Value>
+			</ControllerInput>
+			<OpenWebNetComand>*1*1*13##</OpenWebNetComand>
+		</Command>
+		<Command>
+			<ControllerInput>
+				<Identifier>y</Identifier>
+				<Value>1.0</Value>
+			</ControllerInput>
+			<OpenWebNetComand>*1*0*13##</OpenWebNetComand>
+		</Command>
+	</Commands>
+</ConfigurationCommands>
