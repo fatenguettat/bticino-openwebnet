@@ -143,5 +143,20 @@ public class TagSize implements OpenWebNetTag, Serializable
 	{
 		return values;
 	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof TagSize)
+		{
+			try
+			{
+				boolean size = ((TagSize)obj).getSize().equalsIgnoreCase(this.getSize());
+				return size;
+			}
+			catch (Exception e){}
+		}
+		return false;
+	}
 
 }

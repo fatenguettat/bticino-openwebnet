@@ -87,5 +87,19 @@ public class TagWhat implements OpenWebNetTag, Serializable
 	{
 		return validation;
 	}
-
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof TagWhat)
+		{
+			try
+			{
+				boolean what = ((TagWhat)obj).getWhat().equalsIgnoreCase(this.getWhat());
+				return what;
+			}
+			catch (Exception e){}
+		}
+		return false;
+	}
 }

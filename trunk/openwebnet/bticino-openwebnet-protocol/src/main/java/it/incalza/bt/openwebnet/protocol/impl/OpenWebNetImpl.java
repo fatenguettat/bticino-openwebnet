@@ -8,6 +8,7 @@ import it.incalza.bt.openwebnet.protocol.tag.TagWhat;
 import it.incalza.bt.openwebnet.protocol.tag.TagWhere;
 import it.incalza.bt.openwebnet.protocol.tag.TagWho;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 
 public class OpenWebNetImpl implements OpenWebNet
 {
@@ -247,5 +248,42 @@ public class OpenWebNetImpl implements OpenWebNet
 		if (validation == null) throw new OpenWebNetException("The Validation is null");
 		return validation;
 	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof OpenWebNet)
+		{
+			try
+			{
+				boolean who = false;
+				boolean where = false;
+				boolean what = false;
+				boolean size = false;
+				OpenWebNet own = (OpenWebNet) obj;
+				if (own.getWho() != null)
+				{
+					who = own.getWho().equals(this.getWho());
+				}
+				if (own.getWhere() != null)
+				{
+					where = own.getWhere().equals(this.getWhere());
+				}
+				if (own.getWhat() != null)
+				{
+					where = own.getWhat().equals(this.getWhat());
+				}
+				if (own.getSize() != null)
+				{
+					size = own.getSize().equals(this.getSize());
+				}
+				if (who && where && (what || size)) return true;
+			}
+			catch (Exception nonGestito){}
+		}
+		return false;
+	}
+	
+	
 
 }

@@ -1,5 +1,6 @@
 package it.incalza.bt.openwebnet.protocol.tag;
 
+import it.incalza.bt.openwebnet.protocol.OpenWebNet;
 import it.incalza.bt.openwebnet.protocol.OpenWebNetTag;
 import it.incalza.bt.openwebnet.protocol.OpenWebNetException;
 import it.incalza.bt.openwebnet.protocol.OpenWebNetTagValidation;
@@ -82,5 +83,21 @@ public class TagWho implements OpenWebNetTag, Serializable
 	{
 		return validation;
 	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof TagWho)
+		{
+			try
+			{
+				boolean who = ((TagWho)obj).getWho().equalsIgnoreCase(this.getWho());
+				return who;
+			}
+			catch (Exception e){}
+		}
+		return false;
+	}
+		
 
 }

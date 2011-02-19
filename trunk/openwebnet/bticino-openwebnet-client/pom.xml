@@ -17,6 +17,11 @@
 			<artifactId>bticino-openwebnet-protocol</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.xsocket</groupId>
+			<artifactId>xSocket</artifactId>
+			<version>2.8.15</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -51,7 +56,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>it.incalza.bt.openwebnet.client.KeyBoardClient</mainClass>
+							<mainClass>it.incalza.bt.openwebnet.client.ClientController</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -69,7 +74,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>it.incalza.bt.openwebnet.client.KeyBoardClient</mainClass>
+					<mainClass>it.incalza.bt.openwebnet.client.ClientController</mainClass>
 					<systemProperties>
 						<systemProperty>
 							<key>pathConfiguration</key>
