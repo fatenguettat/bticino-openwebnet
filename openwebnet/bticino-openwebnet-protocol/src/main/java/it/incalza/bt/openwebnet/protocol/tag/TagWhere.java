@@ -115,5 +115,20 @@ public class TagWhere implements OpenWebNetTag, Serializable
 	{
 		return interfaces;
 	}
+	
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof TagWhere)
+		{
+			try
+			{
+				boolean where = ((TagWhere)obj).getWhere().equalsIgnoreCase(this.getWhere());
+				return where;
+			}
+			catch (Exception e){}
+		}
+		return false;
+	}
 
 }

@@ -7,33 +7,108 @@
 		<PortType>USB port</PortType>
 	</ControllerSelected>
 	<Commands>
-		<Command>
-			<ControllerInput>
-				<Identifier>x</Identifier>
-				<Value>-1.0</Value>
-			</ControllerInput>
-			<OpenWebNetComand>*1*1*12##</OpenWebNetComand>
-		</Command>
-		<Command>
-			<ControllerInput>
-				<Identifier>x</Identifier>
-				<Value>1.0</Value>
-			</ControllerInput>
-			<OpenWebNetComand>*1*0*12##</OpenWebNetComand>
-		</Command>
-		<Command>
+		<Command actionComand="STARTUP">
 			<ControllerInput>
 				<Identifier>y</Identifier>
-				<Value>-1.0</Value>
+				<Values>
+					<Value>
+						<min>-0.020</min>
+						<max>-0.012</max>
+					</Value>
+				</Values>
 			</ControllerInput>
-			<OpenWebNetComand>*1*1*13##</OpenWebNetComand>
+			<OpenWebNetComands>
+				<OpenWebNetComand>*1*1*61##</OpenWebNetComand>
+				<OpenWebNetComand>*1*1*62##</OpenWebNetComand>
+			</OpenWebNetComands>
 		</Command>
-		<Command>
+		<Command actionComand="PAUSE">
 			<ControllerInput>
 				<Identifier>y</Identifier>
-				<Value>1.0</Value>
+				<Values>
+					<Value>
+						<min>-0.020</min>
+						<max>-0.012</max>
+					</Value>
+				</Values>
 			</ControllerInput>
-			<OpenWebNetComand>*1*0*13##</OpenWebNetComand>
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*0*51##</OpenWebNetComand>
+				<OpenWebNetComand>*2*0*52##</OpenWebNetComand>
+<!--				<OpenWebNetComand>*2*0*53##</OpenWebNetComand>-->
+<!--				<OpenWebNetComand>*2*0*54##</OpenWebNetComand>-->
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="ACTION">
+			<ControllerInput>
+				<Identifier>y</Identifier>
+				<Values>
+					<Value>
+						<min>0.300</min>
+						<max>1.000</max>
+					</Value>
+				</Values>
+			</ControllerInput>
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*2*52##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="ACTION">
+			<ControllerInput>
+				<Identifier>y</Identifier>
+				<Values>
+					<Value>
+						<min>-1.000</min>
+						<max>-0.300</max>
+					</Value>
+				</Values>
+			</ControllerInput>
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*1*52##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="ACTION">
+			<ControllerInput>
+				<Identifier>x</Identifier>
+				<Values>
+					<Value>
+						<min>-1.000</min>
+						<max>-0.300</max>
+					</Value>
+				</Values>
+			</ControllerInput>
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*1*51##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="ACTION">
+			<ControllerInput>
+				<Identifier>x</Identifier>
+				<Values>
+					<Value>
+						<min>0.300</min>
+						<max>1.000</max>
+					</Value>
+				</Values>
+			</ControllerInput>
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*2*52##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="CLOSED">
+			<ControllerInput>
+				<Identifier>y</Identifier>
+				<Values>
+					<Value>
+						<min>0.004</min>
+						<max>0.004</max>
+					</Value>
+				</Values>
+			</ControllerInput>
+			<OpenWebNetComands>
+				<OpenWebNetComand>*1*0*63##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*64##</OpenWebNetComand>
+			</OpenWebNetComands>
 		</Command>
 	</Commands>
 </ConfigurationCommands>
