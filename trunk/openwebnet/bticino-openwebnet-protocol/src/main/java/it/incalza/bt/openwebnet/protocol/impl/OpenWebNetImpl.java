@@ -19,6 +19,11 @@ public class OpenWebNetImpl implements OpenWebNet
 	private String comand;
 	private OpenWebNetValidation validation;
 
+	public static OpenWebNet newOpenWebNet()
+	{
+		return new OpenWebNetImpl();
+	}
+	
 	@Override
 	public TagWhat getWhat() throws OpenWebNetException
 	{
@@ -107,7 +112,7 @@ public class OpenWebNetImpl implements OpenWebNet
 	}
 
 	@Override
-	public void createComandOpen(String comandOpen) throws OpenWebNetException
+	public OpenWebNet createComandOpen(String comandOpen) throws OpenWebNetException
 	{
 		if (StringUtils.isEmpty(comandOpen)) throw new OpenWebNetException("Comand Open is Empty");
 		this.validation = OpenWebNetValidation.getEnum(comandOpen);
@@ -126,120 +131,126 @@ public class OpenWebNetImpl implements OpenWebNet
 				break;
 			case WRITE_SIZES:
 				createComandOpenWriteDimension(groups[0], groups[1], groups[2]); 
-				break;
+				break;			
 			default:
 				throw new OpenWebNetException("ComandOpen unmanaged!");
 		}
+		return this;
 	}
 
 	@Override
-	public void createComandOpen(TagWho who, TagWhat what, TagWhere where) throws OpenWebNetException
+	public OpenWebNet createComandOpen(TagWho who, TagWhat what, TagWhere where) throws OpenWebNetException
 	{
 		this.who = who;
 		this.where = where;
 		this.what = what;
 		this.size = null;
 		this.validation = OpenWebNetValidation.NORMAL;
+		return this;
 	}
 
 	@Override
-	public void createComandOpen(String who, String what, String where) throws OpenWebNetException
+	public OpenWebNet createComandOpen(String who, String what, String where) throws OpenWebNetException
 	{
 		TagWho tempWho = new TagWho(who);
-		createComandOpen(tempWho, new TagWhat(tempWho, what), new TagWhere(where));
+		return createComandOpen(tempWho, new TagWhat(tempWho, what), new TagWhere(where));
+		
 	}
 
 	@Override
-	public void createComandOpen(String who, String what, String where, int level, int _interface) throws OpenWebNetException
+	public OpenWebNet createComandOpen(String who, String what, String where, int level, int _interface) throws OpenWebNetException
 	{
 		TagWho tempWho = new TagWho(who);
 		TagWhere tempWhere = new TagWhere();
 		tempWhere.setWhereLevelInterface(where, level, _interface);
-		createComandOpen(tempWho, new TagWhat(tempWho, what), new TagWhere(where));
+		return createComandOpen(tempWho, new TagWhat(tempWho, what), new TagWhere(where));
 	}
 
 	@Override
-	public void createComandOpenState(TagWho who, TagWhere where) throws OpenWebNetException
+	public OpenWebNet createComandOpenState(TagWho who, TagWhere where) throws OpenWebNetException
 	{
 		this.who = who;
 		this.where = where;
 		this.what = null;
 		this.size = null;
 		this.validation = OpenWebNetValidation.REQUEST_STATUS;
+		return this;
 	}
 
 	@Override
-	public void createComandOpenState(String who, String where) throws OpenWebNetException
+	public OpenWebNet createComandOpenState(String who, String where) throws OpenWebNetException
 	{
-		createComandOpenState(new TagWho(who), new TagWhere(where));
+		return createComandOpenState(new TagWho(who), new TagWhere(where));
 	}
 
 	@Override
-	public void createComandOpenState(String who, String where, int level, int _interface) throws OpenWebNetException
+	public OpenWebNet createComandOpenState(String who, String where, int level, int _interface) throws OpenWebNetException
 	{
 		TagWho tempWho = new TagWho(who);
 		TagWhere tempWhere = new TagWhere();
 		tempWhere.setWhereLevelInterface(where, level, _interface);
-		createComandOpenState(tempWho, tempWhere);
+		return createComandOpenState(tempWho, tempWhere);
 	}
 
 	@Override
-	public void createComandOpenDimension(TagWho who, TagWhere where, TagSize size) throws OpenWebNetException
+	public OpenWebNet createComandOpenDimension(TagWho who, TagWhere where, TagSize size) throws OpenWebNetException
 	{
 		this.who = who;
 		this.where = where;
 		this.size = size;
 		this.what = null;
 		this.validation = (this.validation!=null && this.validation.equals(OpenWebNetValidation.REQUEST_SIZES)) ? this.validation : OpenWebNetValidation.READY_SIZES;
+		return this;
 	}
 
 	@Override
-	public void createComandOpenDimension(String who, String where, String size) throws OpenWebNetException
+	public OpenWebNet createComandOpenDimension(String who, String where, String size) throws OpenWebNetException
 	{
 		TagWho tempWho = new TagWho(who);
-		createComandOpenDimension(tempWho, new TagWhere(where), new TagSize(tempWho, size));
+		return createComandOpenDimension(tempWho, new TagWhere(where), new TagSize(tempWho, size));
 	}
 
 	@Override
-	public void createComandOpenDimension(String who, String where, int level, int _interface, String size) throws OpenWebNetException
+	public OpenWebNet createComandOpenDimension(String who, String where, int level, int _interface, String size) throws OpenWebNetException
 	{
 		TagWho tempWho = new TagWho(who);
 		TagWhere tempWhere = new TagWhere();
 		tempWhere.setWhereLevelInterface(where, level, _interface);
-		createComandOpenDimension(tempWho, tempWhere, new TagSize(tempWho, size));
+		return createComandOpenDimension(tempWho, tempWhere, new TagSize(tempWho, size));
 	}
 
 	@Override
-	public void createComandOpenWriteDimension(TagWho who, TagWhere where, TagSize size) throws OpenWebNetException
+	public OpenWebNet createComandOpenWriteDimension(TagWho who, TagWhere where, TagSize size) throws OpenWebNetException
 	{
 		this.who = who;
 		this.where = where;
 		this.size = size;
 		this.what = null;
 		this.validation = OpenWebNetValidation.WRITE_SIZES;
+		return this;
 	}
 	
 	@Override
-	public void createComandOpenWriteDimension(String who, String where, String size) throws OpenWebNetException
+	public OpenWebNet createComandOpenWriteDimension(String who, String where, String size) throws OpenWebNetException
 	{
 		TagWho tempWho = new TagWho(who);
-		createComandOpenWriteDimension(tempWho, new TagWhere(where), new TagSize(tempWho, size)); 
+		return createComandOpenWriteDimension(tempWho, new TagWhere(where), new TagSize(tempWho, size)); 
 	}
 
 	@Override
-	public void createComandOpenWriteDimension(String who, String where, String size, String[] values) throws OpenWebNetException
+	public OpenWebNet createComandOpenWriteDimension(String who, String where, String size, String[] values) throws OpenWebNetException
 	{
 		TagWho tempWho = new TagWho(who);
-		createComandOpenWriteDimension(tempWho, new TagWhere(where), new TagSize(tempWho, size, values)); 
+		return createComandOpenWriteDimension(tempWho, new TagWhere(where), new TagSize(tempWho, size, values)); 
 	}
 
 	@Override
-	public void createComandOpenWriteDimension(String who, String where, int level, int _interface, String size, String[] values) throws OpenWebNetException
+	public OpenWebNet createComandOpenWriteDimension(String who, String where, int level, int _interface, String size, String[] values) throws OpenWebNetException
 	{
 		TagWho tempWho = new TagWho(who);
 		TagWhere tempWhere = new TagWhere();
 		tempWhere.setWhereLevelInterface(where, level, _interface);
-		createComandOpenWriteDimension(tempWho, tempWhere, new TagSize(tempWho, size, values)); 
+		return createComandOpenWriteDimension(tempWho, tempWhere, new TagSize(tempWho, size, values)); 
 	}
 
 	@Override
