@@ -1,8 +1,7 @@
 package it.incalza.bt.openwebnet.protocol.tag;
 
-import it.incalza.bt.openwebnet.protocol.OpenWebNet;
-import it.incalza.bt.openwebnet.protocol.OpenWebNetTag;
 import it.incalza.bt.openwebnet.protocol.OpenWebNetException;
+import it.incalza.bt.openwebnet.protocol.OpenWebNetTag;
 import it.incalza.bt.openwebnet.protocol.OpenWebNetTagValidation;
 import java.io.Serializable;
 import org.apache.commons.lang.StringUtils;

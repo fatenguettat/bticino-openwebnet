@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 
 public class OpenWebNetImpl implements OpenWebNet
 {
+	private static final Logger logger = Logger.getLogger(OpenWebNetImpl.class);
 	private TagWho who;
 	private TagWhat what;
 	private TagWhere where;
@@ -61,6 +62,7 @@ public class OpenWebNetImpl implements OpenWebNet
 	private void compiledComand() throws OpenWebNetException
 	{
 		StringBuilder builder = new StringBuilder();
+		logger.debug("Compiling Comand is " + getValidation());
 		switch (getValidation())
 		{
 			case NORMAL:
@@ -99,6 +101,7 @@ public class OpenWebNetImpl implements OpenWebNet
 							 .append(END_COMAND);
 				break;					
 		}
+		logger.debug("The comand Compiled is " + builder.toString());
 		this.comand = builder.toString();
 	}
 	
@@ -259,42 +262,5 @@ public class OpenWebNetImpl implements OpenWebNet
 		if (validation == null) throw new OpenWebNetException("The Validation is null");
 		return validation;
 	}
-
-	@Override
-	public boolean equals(Object obj)
-	{
-		if (obj instanceof OpenWebNet)
-		{
-			try
-			{
-				boolean who = false;
-				boolean where = false;
-				boolean what = false;
-				boolean size = false;
-				OpenWebNet own = (OpenWebNet) obj;
-				if (own.getWho() != null)
-				{
-					who = own.getWho().equals(this.getWho());
-				}
-				if (own.getWhere() != null)
-				{
-					where = own.getWhere().equals(this.getWhere());
-				}
-				if (own.getWhat() != null)
-				{
-					where = own.getWhat().equals(this.getWhat());
-				}
-				if (own.getSize() != null)
-				{
-					size = own.getSize().equals(this.getSize());
-				}
-				if (who && where && (what || size)) return true;
-			}
-			catch (Exception nonGestito){}
-		}
-		return false;
-	}
-	
-	
 
 }
