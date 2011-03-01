@@ -4,8 +4,22 @@
 	<groupId>it.incalza</groupId>
 	<artifactId>myhome-input-controller</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>MyHome Input Controller </name>
+	<name>MyHome Input Controller</name>
+	<properties>
+		<junit.version>4.8.2</junit.version>
+		<log4j.version>1.2.12</log4j.version>
+	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
 		<dependency>
 			<groupId>net.java.games</groupId>
 			<artifactId>jinput</artifactId>
