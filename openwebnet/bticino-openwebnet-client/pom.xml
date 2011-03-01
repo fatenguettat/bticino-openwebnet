@@ -26,65 +26,11 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jaxb2.maven2</groupId>
-				<artifactId>maven-jaxb2-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<extension>true</extension>
-					<generateDirectory>src/main/java</generateDirectory>
-					<schemaDirectory>${project.parent.basedir}/xsd</schemaDirectory>
-					<verbose>true</verbose>
-				</configuration>
-			</plugin>
-			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
 					<encoding>UTF-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>it.incalza.bt.openwebnet.client.ClientController</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.1</version>
-				<executions>
-					<execution>
-						<phase>install</phase>
-						<goals>
-							<goal>java</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<mainClass>it.incalza.bt.openwebnet.client.ClientController</mainClass>
-					<systemProperties>
-						<systemProperty>
-							<key>pathConfiguration</key>
-							<value>${project.parent.basedir}/configuration/</value>
-						</systemProperty>
-						<systemProperty>
-							<key>fileNameConfigurationCommands</key>
-							<value>configurationCommands.xml</value>
-						</systemProperty>
-					</systemProperties>
 				</configuration>
 			</plugin>
 		</plugins>

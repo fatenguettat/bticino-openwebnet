@@ -1,5 +1,7 @@
 package it.incalza.bt.openwebnet.client;
 
+import it.incalza.bt.openwebnet.protocol.OpenWebNet;
+import it.incalza.bt.openwebnet.protocol.OpenWebNetException;
 import java.io.IOException;
 import java.nio.BufferOverflowException;
 import java.util.ArrayList;
@@ -37,6 +39,12 @@ public class OpenWebNetClient
 	{
 		this.connection.write(request);
 		logger.debug("Command send to server " + request);
+	}
+	
+	public void write(OpenWebNet request) throws BufferOverflowException, IOException, OpenWebNetException
+	{
+		this.connection.write(request.getComand());
+		logger.debug("Command send to server " + request.getComand());
 	}
 	
 	public boolean isConnected()
