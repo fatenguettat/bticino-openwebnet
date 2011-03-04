@@ -4,7 +4,7 @@ import it.incalza.bt.openwebnet.protocol.OpenWebNetValidation;
 import java.io.IOException;
 import java.nio.BufferUnderflowException;
 import java.nio.channels.ClosedChannelException;
-import org.apache.commons.lang.StringUtils;
+import java.util.Observable;
 import org.apache.log4j.Logger;
 import org.xsocket.MaxReadSizeExceededException;
 import org.xsocket.connection.IConnectExceptionHandler;
@@ -15,16 +15,16 @@ import org.xsocket.connection.IDisconnectHandler;
 import org.xsocket.connection.IIdleTimeoutHandler;
 import org.xsocket.connection.INonBlockingConnection;
 
-public class OpenWebNetClientHandler implements IDataHandler, IConnectHandler, IDisconnectHandler, IConnectExceptionHandler, IIdleTimeoutHandler, IConnectionTimeoutHandler
+public class OpenWebNetClientHandler extends Observable implements OpenWebNetClientReceived, IDataHandler, IConnectHandler, IDisconnectHandler, IConnectExceptionHandler, IIdleTimeoutHandler, IConnectionTimeoutHandler
 {
 	private static final Logger logger = Logger.getLogger(OpenWebNetClientHandler.class);
 	private boolean connectionAccepted;
-	private OpenWebNetClient client;
+	private boolean requestTypeClient;
+	private String received;
 	private boolean monitor;
-	
-	public OpenWebNetClientHandler(OpenWebNetClient client, boolean monitor)
+
+	public OpenWebNetClientHandler(boolean monitor)
 	{
-		this.client = client;
 		this.monitor = monitor;
 	}
 
@@ -32,7 +32,7 @@ public class OpenWebNetClientHandler implements IDataHandler, IConnectHandler, I
 	public boolean onConnectException(INonBlockingConnection connection, IOException ioe) throws IOException
 	{
 		logger.error("onConnectException: " + ioe.getMessage());
-		setConnectionAccepted(false);
+		connectionAccepted = false;
 		return true;
 	}
 
@@ -40,7 +40,8 @@ public class OpenWebNetClientHandler implements IDataHandler, IConnectHandler, I
 	public boolean onDisconnect(INonBlockingConnection connection) throws IOException
 	{
 		logger.info("Client OpenWebNet disconnect");
-		setConnectionAccepted(false);
+		connectionAccepted = false;
+		requestTypeClient = false;
 		return true;
 	}
 
@@ -48,63 +49,57 @@ public class OpenWebNetClientHandler implements IDataHandler, IConnectHandler, I
 	public boolean onConnect(INonBlockingConnection connection) throws IOException, BufferUnderflowException, MaxReadSizeExceededException
 	{
 		logger.info("Client OpenWebNet connect");
-		setConnectionAccepted(false);
+		connectionAccepted = false;
+		requestTypeClient = false;
 		return true;
 	}
 
 	@Override
 	public boolean onData(INonBlockingConnection connection) throws IOException, BufferUnderflowException, ClosedChannelException, MaxReadSizeExceededException
 	{
-//		connection.markReadPosition();
-		String received = connection.readStringByDelimiter("##", 1024);
+
+		received = connection.readStringByDelimiter("##", 1024);
 		received = received.concat("##");
-		logger.debug("Client OpenWebNet sent " + received);
-		if (!isConnectionAccepted())
+		logger.debug("Server OpenWebNet sent " + received);
+		if (!connectionAccepted && !requestTypeClient)
 		{
-			if (StringUtils.isNotEmpty(received))
+			if (OpenWebNetValidation.ACK.match(received))
 			{
-				if (OpenWebNetValidation.ACK.match(received))
+				logger.info("Server OpenWebNet connection accepted");
+				if (!isMonitor())
 				{
-					logger.info("Client OpenWebNet connection accepted");
-					if (!this.monitor)
-					{
-						connection.write("*99*0##");
-						logger.debug("Send to Client OpenWebNet *99*0##");
-					}
-					else 
-					{
-						connection.write("*99*1##");
-						logger.debug("Send to Client OpenWebNet *99*1##");
-					}
-					received = connection.readStringByDelimiter("##", 1024);
-					received = received.concat("##");
-					logger.debug("Client OpenWebNet sent  " + received);
-					if (OpenWebNetValidation.ACK.match(received))
-					{
-						logger.info("Client OpenWebNet Accepted!");
-						setConnectionAccepted(true);
-					}
-					else
-					{
-						logger.info("The client requires password!");
-						setConnectionAccepted(false);
-					}
+					connection.write("*99*0##");
+					logger.debug("Send to Server OpenWebNet *99*0##!");
 				}
-				else if (OpenWebNetValidation.NACK.match(received))
+				else
 				{
-					logger.info("Connection Client OpenWebNet not Accepted");
-					setConnectionAccepted(false);
+					connection.write("*99*1##");
+					logger.debug("Send to Server OpenWebNet *99*1##!");
 				}
+				requestTypeClient = true;
+			}
+			else if (OpenWebNetValidation.NACK.match(received))
+			{
+				logger.info("Server OpenWebNet connection not accepted!");
+				connectionAccepted = false;
+			}
+		}
+		else if (!connectionAccepted && requestTypeClient)
+		{
+			if (OpenWebNetValidation.ACK.match(received))
+			{
+				logger.info("Server OpenWebNet Accepted client!");
+				connectionAccepted = true;
 			}
 			else
 			{
-				logger.info("Client OpenWebNet not response");
-				setConnectionAccepted(false);
+				logger.info("Server OpenWebNet requires password!");
+				connectionAccepted = false;
 			}
 		}
-		else
+		else if (connectionAccepted && requestTypeClient)
 		{
-			this.client.handleReceived(received);
+			changeSomething();
 		}
 		return true;
 	}
@@ -113,7 +108,7 @@ public class OpenWebNetClientHandler implements IDataHandler, IConnectHandler, I
 	public boolean onIdleTimeout(INonBlockingConnection connection) throws IOException
 	{
 		connection.close();
-		setConnectionAccepted(false);
+		connectionAccepted = false;
 		return true;
 	}
 
@@ -121,13 +116,20 @@ public class OpenWebNetClientHandler implements IDataHandler, IConnectHandler, I
 	public boolean onConnectionTimeout(INonBlockingConnection connection) throws IOException
 	{
 		connection.close();
-		setConnectionAccepted(false);
+		connectionAccepted = false;
 		return true;
 	}
-	
-	public boolean isMonito()
+
+	public boolean isMonitor()
 	{
 		return monitor;
+	}
+
+	public void changeSomething()
+	{
+		// Notify observers of change
+		setChanged();
+		notifyObservers();
 	}
 
 	public void setConnectionAccepted(boolean connected)
@@ -138,5 +140,11 @@ public class OpenWebNetClientHandler implements IDataHandler, IConnectHandler, I
 	public boolean isConnectionAccepted()
 	{
 		return connectionAccepted;
+	}
+
+	@Override
+	public String getReceived()
+	{
+		return received;
 	}
 }
