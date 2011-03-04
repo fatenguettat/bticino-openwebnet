@@ -4,29 +4,31 @@ import it.incalza.bt.openwebnet.protocol.OpenWebNet;
 import it.incalza.bt.openwebnet.protocol.OpenWebNetException;
 import java.io.IOException;
 import java.nio.BufferOverflowException;
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Queue;
 import org.apache.log4j.Logger;
 import org.xsocket.connection.IConnection.FlushMode;
-import org.xsocket.connection.IHandler;
 import org.xsocket.connection.INonBlockingConnection;
-import org.xsocket.connection.NonBlockingConnectionPool;
 
-public class OpenWebNetClient 
+public class OpenWebNetClient implements Observer
 {
 	private static final Logger logger = Logger.getLogger(OpenWebNetClient.class);
 	private INonBlockingConnection connection;
 	private OpenWebNetClientHandler openWebNetClientHandler;
-	
-	private List<String> reciving = new ArrayList<String>();
-	
+	private ArrayDeque<String> recivingQueue = new ArrayDeque<String>();
+
 	public OpenWebNetClient(INonBlockingConnection connection, boolean monitor) throws IOException
 	{
 		this.connection = connection;
-		if (monitor) connection.setFlushmode(FlushMode.ASYNC);
-		else connection.setFlushmode(FlushMode.SYNC);
-		this.openWebNetClientHandler = new OpenWebNetClientHandler(this, monitor);
+		if (monitor) 
+			connection.setFlushmode(FlushMode.ASYNC);
+		else
+			connection.setFlushmode(FlushMode.SYNC);
+		this.openWebNetClientHandler = new OpenWebNetClientHandler(monitor);
+		this.openWebNetClientHandler.addObserver(this);
 		this.connection.setHandler(this.openWebNetClientHandler);
 	}
 	
@@ -49,17 +51,34 @@ public class OpenWebNetClient
 	
 	public boolean isConnected()
 	{
-		return this.connection.isOpen() && this.openWebNetClientHandler.isConnectionAccepted();
+		return this.connection.isOpen();
+	}
+	
+	public INonBlockingConnection getConnection()
+	{
+		return connection;
 	}
 
-	public synchronized void handleReceived(String received)
+	@Override
+	public void update(Observable obs, Object o)
 	{
-		this.reciving.add(0,received);
+		if (o instanceof OpenWebNetClientReceived)
+		{
+			OpenWebNetClientReceived clientReceived = (OpenWebNetClientReceived) o;
+			logger.debug("Observable Client OpenWebNet sent " + clientReceived.getReceived());
+			recivingQueue.addFirst(clientReceived.getReceived());
+		}
 	}
-
-	public String getReceiving()
+	
+	public Iterator<String> getReceivingIterator()
 	{
-		return this.reciving.get(0);
+		return recivingQueue.iterator();
+	}
+	
+
+	public Queue<String> getRecivingQueue()
+	{
+		return recivingQueue;
 	}
 	
 }

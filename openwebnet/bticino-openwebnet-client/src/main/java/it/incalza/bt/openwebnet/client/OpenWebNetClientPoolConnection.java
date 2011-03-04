@@ -56,6 +56,10 @@ public class OpenWebNetClientPoolConnection
 		return new OpenWebNetClient(connection, true);
 	}
 	
+	public void destroyConnection(OpenWebNetClient client) throws IOException
+	{
+		NonBlockingConnectionPool.destroy(client.getConnection());
+	}
 	
 	
 }
