@@ -41,12 +41,12 @@ public class OpenWebNetClient implements Observer
 	{
 		this.connection.write(request);
 		logger.debug("Command send to server " + request);
+		this.connection.flush();
 	}
 	
 	public void write(OpenWebNet request) throws BufferOverflowException, IOException, OpenWebNetException
 	{
-		this.connection.write(request.getComand());
-		logger.debug("Command send to server " + request.getComand());
+		write(request.getComand());
 	}
 	
 	public boolean isConnected()
