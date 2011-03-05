@@ -23,25 +23,26 @@ public class InputController implements Runnable
 			int compassDir = gpController.getXYStickDir();
 			if (compassDir != GamePadController.NONE) application.handleEventPressed(GamePadController.getStringDirection(compassDir));
 			else application.handleEventReleased(GamePadController.getStringDirection(compassDir));
-//			
-//			if (buttons.length > 0) application.handleEventPressed(ArrayUtils.toString(buttons), 0f, false);
-//
-//			boolean[] buttons = gpController.getButtons();
-//			if (buttons.length != GamePadController.NUM_BUTTONS)
-//	      System.out.println("Wring number of button values");
-//	    else {
-//	      for (int i=0; i < GamePadController.NUM_BUTTONS; i++) {
-//	      	
-//	      }    
-//	    }
-			try
+			boolean[] buttons = gpController.getButtons();
+			if (buttons[0])
 			{
-				Thread.sleep(SLEEP_TIME);
+				application.handleEventPressed("ROOM");
+				try
+				{
+					Thread.sleep(500);
+				}
+				catch (InterruptedException e)
+				{
+				}
 			}
-			catch (InterruptedException e)
-			{
-					
-			}
+
+				try
+				{
+					Thread.sleep(SLEEP_TIME);
+				}
+				catch (InterruptedException e)
+				{
+				}
 		}
 	}
 
