@@ -22,7 +22,6 @@ public class Main implements InputControllerHandler
 	private InputController inputController;
 	private Thread controllerThread;
 	private String lastAction = GamePadController.getStringDirection(GamePadController.OFF);
-	private Command lastCommand = null;
 	private OpenWebNetClient client = null;
 	private boolean settingOpenWebNetClient = false;
 	private ArrayDeque<Command> commandsQueen = new ArrayDeque<Command>();
@@ -108,11 +107,11 @@ public class Main implements InputControllerHandler
 					}
 				}
 				lastAction = action;
-				if (lastAction.equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.OFF)) 
-						|| lastAction.equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.ON)))
+				if (lastAction.equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.OFF)) || lastAction.equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.ON)))
 				{
 					return;
-				}else
+				}
+				else
 				{
 					logger.debug("Adding in to queen commands sent");
 					commandsQueen.addLast(c);
