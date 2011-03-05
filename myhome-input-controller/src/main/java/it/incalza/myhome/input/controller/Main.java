@@ -7,7 +7,6 @@ import it.incalza.bt.openwebnet.protocol.impl.OpenWebNetImpl;
 import it.incalza.bt.openwebnet.protocol.tag.TagWhat;
 import it.incalza.myhome.input.controller.configuration.Command;
 import it.incalza.myhome.input.controller.configuration.ConfigurationCommands;
-import it.incalza.myhome.input.controller.configuration.ObjectFactory;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.xml.bind.JAXBContext;
@@ -32,12 +31,13 @@ public class Main implements InputControllerHandler
 	{
 		try
 		{
-			String fileName = "configuration/".concat(StringUtils.isEmpty(System.getProperty("configuration.file.name")) ? "configurationCommands.xml" : System.getProperty("configuration.file.name"));
-			ClassLoader cl = ObjectFactory.class.getClassLoader();
-			JAXBContext jc = JAXBContext.newInstance("it/incalza/myhome/input/controller/configuration/",cl);
+			String fileName = StringUtils.isEmpty(System.getProperty("configuration.file.name")) ? "configurationCommands.xml" : System.getProperty("configuration.file.name");
+			JAXBContext jc = JAXBContext.newInstance(it.incalza.myhome.input.controller.configuration.ObjectFactory.class);
 			Unmarshaller u = jc.createUnmarshaller();
 			InputStream inputStream = ClassLoader.getSystemResourceAsStream(fileName);
-			logger.debug("InputStream is NULL " + inputStream==null);
+			if (inputStream == null) { 
+				throw new NullPointerException("The configuration file is null!");
+			}
 			configurationCommands = (ConfigurationCommands) u.unmarshal(inputStream);
 			clientPoolConnection = OpenWebNetClientPoolConnection.getInstance();
 		}
@@ -81,7 +81,7 @@ public class Main implements InputControllerHandler
 			Command c = getCommand(action);
 			if (c != null)
 			{
-				if (!settingOpenWebNetClient)
+				if (settingOpenWebNetClient)
 				{
 					checkAndCreateConnectionOpenWebNetClient();
 					if (client.isConnected())
@@ -91,7 +91,6 @@ public class Main implements InputControllerHandler
 							for (String own : c.getOpenWebNetComands().getOpenWebNetComand())
 							{
 								client.write(new OpenWebNetImpl().createComandOpen(own));
-								lastCommand = c;
 								logger.debug("Pressed Action " + action + " sent comand own " + own);
 							}
 						}
@@ -105,17 +104,15 @@ public class Main implements InputControllerHandler
 				{
 					for (String own : c.getOpenWebNetComands().getOpenWebNetComand())
 					{
-						lastCommand = c;
+
 						logger.debug("Pressed Action " + action + " sent comand own " + own);
 					}
 				}
+				lastCommand = c;
+				lastAction = action;
 			}
 		}
-		else
-		{
 
-		}
-		lastAction = action;
 	}
 
 	public synchronized void handleEventReleased(String action)
@@ -147,14 +144,14 @@ public class Main implements InputControllerHandler
 					}
 				}
 			}
-			else 
+			else
 			{
 				for (String own : lastCommand.getOpenWebNetComands().getOpenWebNetComand())
 				{
 					try
 					{
 						OpenWebNet ownSent = new OpenWebNetImpl().createComandOpen(own);
-						OpenWebNet ownSendig = new OpenWebNetImpl().createComandOpen(ownSent.getWho(),new TagWhat(ownSent.getWho(),"0"), ownSent.getWhere());
+						OpenWebNet ownSendig = new OpenWebNetImpl().createComandOpen(ownSent.getWho(), new TagWhat(ownSent.getWho(), "0"), ownSent.getWhere());
 						logger.debug("Simulate Sendig OpenWebNetClient " + action + " sent comand own " + ownSendig.getComand());
 					}
 					catch (Exception e)
@@ -164,7 +161,6 @@ public class Main implements InputControllerHandler
 				}
 			}
 			lastAction = action;
-			
 		}
 	}
 
