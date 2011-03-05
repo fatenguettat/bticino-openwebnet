@@ -5,6 +5,7 @@ import it.incalza.bt.openwebnet.client.OpenWebNetClientPoolConnection;
 import it.incalza.bt.openwebnet.protocol.OpenWebNet;
 import it.incalza.bt.openwebnet.protocol.impl.OpenWebNetImpl;
 import it.incalza.bt.openwebnet.protocol.tag.TagWhat;
+import it.incalza.myhome.input.controller.configuration.ActionComand;
 import it.incalza.myhome.input.controller.configuration.Command;
 import it.incalza.myhome.input.controller.configuration.ConfigurationCommands;
 import java.io.IOException;
@@ -78,7 +79,7 @@ public class Main implements InputControllerHandler
 		{
 			logger.info("Pressed Action " + action);
 			Command c = getCommand(action);
-			if (c != null)
+			if (c != null && !commandsQueen.contains(c))
 			{
 				if (settingOpenWebNetClient)
 				{
@@ -114,11 +115,18 @@ public class Main implements InputControllerHandler
 				else
 				{
 					logger.debug("Adding in to queen commands sent");
+					if ((c.getActionComand().equals(ActionComand.SOUTH) && commandsQueen.contains(getCommand(ActionComand.NORTH.name()))))
+						commandsQueen.remove(getCommand(ActionComand.NORTH.name()));
+					else if ((c.getActionComand().equals(ActionComand.NORTH) && commandsQueen.contains(getCommand(ActionComand.SOUTH.name()))))
+						commandsQueen.remove(getCommand(ActionComand.SOUTH.name()));
+					if ((c.getActionComand().equals(ActionComand.WEST) && commandsQueen.contains(getCommand(ActionComand.EAST.name()))))
+						commandsQueen.remove(getCommand(ActionComand.EAST.name()));
+					else if ((c.getActionComand().equals(ActionComand.EAST) && commandsQueen.contains(getCommand(ActionComand.WEST.name()))))
+						commandsQueen.remove(getCommand(ActionComand.WEST.name()));
 					commandsQueen.addLast(c);
 				}
 			}
 		}
-
 	}
 
 	public synchronized void handleEventReleased(String action)
