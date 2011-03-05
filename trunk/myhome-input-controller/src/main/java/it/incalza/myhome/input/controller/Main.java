@@ -34,7 +34,7 @@ public class Main implements InputControllerHandler
 		{
 			String fileName = "configuration/".concat(StringUtils.isEmpty(System.getProperty("configuration.file.name")) ? "configurationCommands.xml" : System.getProperty("configuration.file.name"));
 			ClassLoader cl = ObjectFactory.class.getClassLoader();
-			JAXBContext jc = JAXBContext.newInstance("it/incalza/myhome/input/controller/configuration",cl);
+			JAXBContext jc = JAXBContext.newInstance("it/incalza/myhome/input/controller/configuration/",cl);
 			Unmarshaller u = jc.createUnmarshaller();
 			InputStream inputStream = ClassLoader.getSystemResourceAsStream(fileName);
 			logger.debug("InputStream is NULL " + inputStream==null);
