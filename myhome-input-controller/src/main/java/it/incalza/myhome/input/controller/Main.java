@@ -8,6 +8,7 @@ import it.incalza.bt.openwebnet.protocol.tag.TagWhat;
 import it.incalza.myhome.input.controller.configuration.ActionComand;
 import it.incalza.myhome.input.controller.configuration.Command;
 import it.incalza.myhome.input.controller.configuration.ConfigurationCommands;
+import it.incalza.myhome.input.controller.configuration.Room;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayDeque;
@@ -23,6 +24,7 @@ public class Main implements InputControllerHandler
 	private InputController inputController;
 	private Thread controllerThread;
 	private String lastAction = GamePadController.getStringDirection(GamePadController.OFF);
+	private Room room = Room.ROOM_1;
 	private OpenWebNetClient client = null;
 	private boolean settingOpenWebNetClient = false;
 	private ArrayDeque<Command> commandsQueen = new ArrayDeque<Command>();
@@ -50,7 +52,7 @@ public class Main implements InputControllerHandler
 	public static void main(String[] args)
 	{
 		Main main = new Main();
-		main.init(false);
+		main.init(true);
 	}
 
 	public void init(boolean openWebNetClient)
@@ -75,6 +77,15 @@ public class Main implements InputControllerHandler
 
 	public synchronized void handleEventPressed(String action)
 	{
+		if (action.equals("ROOM"))
+		{
+			if (room.equals(Room.ROOM_1))
+				room = Room.ROOM_2;
+			else if (room.equals(Room.ROOM_2))
+				room = Room.ROOM_1;
+			logger.debug("Change Room " + room);
+			return;
+		}
 		if (!lastAction.equalsIgnoreCase(action))
 		{
 			logger.info("Pressed Action " + action);
@@ -204,7 +215,12 @@ public class Main implements InputControllerHandler
 	{
 		for (Command c : configurationCommands.getCommands().getCommand())
 		{
-			if (c.getActionComand().name().equalsIgnoreCase(action))
+			if (c.getRoom() != null && c.getActionComand().name().equalsIgnoreCase(action) && c.getRoom().equals(room))
+			{
+				logger.debug("Found command! Action: " + action + " Room " + room);
+				return c;
+			}
+			else if (c.getRoom() == null && c.getActionComand().name().equalsIgnoreCase(action))
 			{
 				logger.debug("Found command! Action: " + action);
 				return c;

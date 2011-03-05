@@ -13,48 +13,32 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for actionComand.
+ * <p>Java class for room.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="actionComand">
+ * &lt;simpleType name="room">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="ON"/>
- *     &lt;enumeration value="OFF"/>
- *     &lt;enumeration value="NORTH_WEST"/>
- *     &lt;enumeration value="NORTH_EAST"/>
- *     &lt;enumeration value="NORTH"/>
- *     &lt;enumeration value="SOUTH_WEST"/>
- *     &lt;enumeration value="SOUTH_EAST"/>
- *     &lt;enumeration value="SOUTH"/>
- *     &lt;enumeration value="EAST"/>
- *     &lt;enumeration value="WEST"/>
+ *     &lt;enumeration value="ROOM_1"/>
+ *     &lt;enumeration value="ROOM_2"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "actionComand")
+@XmlType(name = "room")
 @XmlEnum
-public enum ActionComand {
+public enum Room {
 
-    ON,
-    OFF,
-    NORTH_WEST,
-    NORTH_EAST,
-    NORTH,
-    SOUTH_WEST,
-    SOUTH_EAST,
-    SOUTH,
-    EAST,
-    WEST;
+    ROOM_1,
+    ROOM_2;
 
     public String value() {
         return name();
     }
 
-    public static ActionComand fromValue(String v) {
+    public static Room fromValue(String v) {
         return valueOf(v);
     }
 
