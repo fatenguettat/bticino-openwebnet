@@ -1,113 +1,39 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ConfigurationCommands
-	xmlns="http://www.incalza.it/bt/openwebnet/client/configuration">
-	<ControllerSelected>
-		<Name>SplitFish Game Controller</Name>
-		<Type>Stick</Type>
-		<PortType>USB port</PortType>
-	</ControllerSelected>
+	xmlns="http://www.incalza.it/myhome/input/controller/configuration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.incalza.it/myhome/input/controller/configuration ../xsd/configuration.xsd ">
 	<Commands>
-		<Command actionComand="STARTUP">
-			<ControllerInput>
-				<Identifier>y</Identifier>
-				<Values>
-					<Value>
-						<min>-0.020</min>
-						<max>-0.012</max>
-					</Value>
-				</Values>
-			</ControllerInput>
+		<Command actionComand="ON">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*1*61##</OpenWebNetComand>
 				<OpenWebNetComand>*1*1*62##</OpenWebNetComand>
 			</OpenWebNetComands>
 		</Command>
-		<Command actionComand="PAUSE">
-			<ControllerInput>
-				<Identifier>y</Identifier>
-				<Values>
-					<Value>
-						<min>-0.020</min>
-						<max>-0.012</max>
-					</Value>
-				</Values>
-			</ControllerInput>
-			<OpenWebNetComands>
-				<OpenWebNetComand>*2*0*51##</OpenWebNetComand>
-				<OpenWebNetComand>*2*0*52##</OpenWebNetComand>
-<!--				<OpenWebNetComand>*2*0*53##</OpenWebNetComand>-->
-<!--				<OpenWebNetComand>*2*0*54##</OpenWebNetComand>-->
-			</OpenWebNetComands>
-		</Command>
-		<Command actionComand="ACTION">
-			<ControllerInput>
-				<Identifier>y</Identifier>
-				<Values>
-					<Value>
-						<min>0.300</min>
-						<max>1.000</max>
-					</Value>
-				</Values>
-			</ControllerInput>
-			<OpenWebNetComands>
-				<OpenWebNetComand>*2*2*52##</OpenWebNetComand>
-			</OpenWebNetComands>
-		</Command>
-		<Command actionComand="ACTION">
-			<ControllerInput>
-				<Identifier>y</Identifier>
-				<Values>
-					<Value>
-						<min>-1.000</min>
-						<max>-0.300</max>
-					</Value>
-				</Values>
-			</ControllerInput>
-			<OpenWebNetComands>
-				<OpenWebNetComand>*2*1*52##</OpenWebNetComand>
-			</OpenWebNetComands>
-		</Command>
-		<Command actionComand="ACTION">
-			<ControllerInput>
-				<Identifier>x</Identifier>
-				<Values>
-					<Value>
-						<min>-1.000</min>
-						<max>-0.300</max>
-					</Value>
-				</Values>
-			</ControllerInput>
-			<OpenWebNetComands>
-				<OpenWebNetComand>*2*1*51##</OpenWebNetComand>
-			</OpenWebNetComands>
-		</Command>
-		<Command actionComand="ACTION">
-			<ControllerInput>
-				<Identifier>x</Identifier>
-				<Values>
-					<Value>
-						<min>0.300</min>
-						<max>1.000</max>
-					</Value>
-				</Values>
-			</ControllerInput>
-			<OpenWebNetComands>
-				<OpenWebNetComand>*2*2*52##</OpenWebNetComand>
-			</OpenWebNetComands>
-		</Command>
-		<Command actionComand="CLOSED">
-			<ControllerInput>
-				<Identifier>y</Identifier>
-				<Values>
-					<Value>
-						<min>0.004</min>
-						<max>0.004</max>
-					</Value>
-				</Values>
-			</ControllerInput>
+		<Command actionComand="OFF">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*0*61##</OpenWebNetComand>
 				<OpenWebNetComand>*1*0*62##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="NORTH">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*0*51##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="SOUTH">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*0*52##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="EAST">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*0*53##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="WEST">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*0*54##</OpenWebNetComand>
 			</OpenWebNetComands>
 		</Command>
 	</Commands>

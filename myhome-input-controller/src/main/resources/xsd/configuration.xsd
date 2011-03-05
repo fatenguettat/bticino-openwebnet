@@ -7,58 +7,24 @@
 	<xs:element name="ConfigurationCommands">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="ControllerSelected" type="controllerSelected"
-					maxOccurs="1" />
-				<xs:element name="Commands" type="commands" minOccurs="0"
-					maxOccurs="1" />
+				<xs:element name="Commands" type="commands" minOccurs="0" maxOccurs="1" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
-
-	<xs:complexType name="controllerSelected">
-		<xs:sequence>
-			<xs:element name="Name" type="xs:string" maxOccurs="1" />
-			<xs:element name="Type" type="xs:string" maxOccurs="1" />
-			<xs:element name="PortType" type="xs:string" maxOccurs="1" />
-		</xs:sequence>
-	</xs:complexType>
-
-
 	<xs:complexType name="command">
 		<xs:sequence>
-			<xs:element name="ControllerInput" type="controllerInput" maxOccurs="1" />
 			<xs:element name="OpenWebNetComands" maxOccurs="1">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="OpenWebNetComand" type="xs:string" maxOccurs="unbounded" minOccurs="1" />
+						<xs:element name="OpenWebNetComand" type="xs:string"
+							maxOccurs="unbounded" minOccurs="1" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>
 		<xs:attribute name="actionComand" type="actionComand" />
 	</xs:complexType>
-
-	<xs:complexType name="controllerInput">
-		<xs:sequence>
-			<xs:element name="Identifier" type="xs:string" maxOccurs="1" />
-			<xs:element name="Values" maxOccurs="1">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="Value" type="Value" maxOccurs="unbounded" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-
-	<xs:complexType name="Value">
-		<xs:sequence>
-			<xs:element name="min" type="xs:string" minOccurs="1" maxOccurs="1" default="0.000" />
-			<xs:element name="max" type="xs:string" minOccurs="1" maxOccurs="1" default="0.000" />
-		</xs:sequence>
-	</xs:complexType>
-
 
 	<xs:complexType name="commands">
 		<xs:sequence>
@@ -68,10 +34,16 @@
 
 	<xs:simpleType name="actionComand">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="STARTUP" />
-			<xs:enumeration value="CLOSED" />
-			<xs:enumeration value="PAUSE" />
-			<xs:enumeration value="ACTION" />
+			<xs:enumeration value="ON" />
+			<xs:enumeration value="OFF" />
+			<xs:enumeration value="NORTH_WEST" />
+			<xs:enumeration value="NORTH_EAST" />
+			<xs:enumeration value="NORTH" />
+			<xs:enumeration value="SOUTH_WEST" />
+			<xs:enumeration value="SOUTH_EAST" />
+			<xs:enumeration value="SOUTH" />
+			<xs:enumeration value="EAST" />
+			<xs:enumeration value="WEST" />
 		</xs:restriction>
 	</xs:simpleType>
 

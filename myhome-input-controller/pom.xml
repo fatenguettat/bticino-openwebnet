@@ -95,7 +95,7 @@
 					</archive>
 					<outputDirectory>${project.build.directory}/MyHomeInputController</outputDirectory>
 					<excludes>
-						<exclude>**/configuration/*</exclude>
+						<exclude>configuration/*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -113,6 +113,7 @@
 						<configuration>
 							<outputDirectory>${project.build.directory}/MyHomeInputController/lib</outputDirectory>
 							<overWriteIfNewer>true</overWriteIfNewer>
+							<scope>runtime</scope>
 						</configuration>
 					</execution>
 				</executions>
