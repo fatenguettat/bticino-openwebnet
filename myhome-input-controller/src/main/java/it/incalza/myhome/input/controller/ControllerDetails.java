@@ -19,8 +19,12 @@ package it.incalza.myhome.input.controller;
  * https://freefodder.dev.java.net/tutorial/jinputTutorialOne.html
  */
 
-import java.io.*;
-import net.java.games.input.*;
+import java.io.PrintStream;
+import net.java.games.input.Component;
+import net.java.games.input.Controller;
+import net.java.games.input.ControllerEnvironment;
+import net.java.games.input.Rumbler;
+import net.java.games.input.Version;
 
 public class ControllerDetails
 {
