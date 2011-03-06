@@ -64,14 +64,6 @@ public class ControllerDetails
 		
 		printComponents(c.getComponents(), ps);
 		printRumblers(c.getRumblers(), ps);
-
-	// get indices for sticks axes: (x,y) and (z,rz) 
-		int xAxisIdx = findCompIndex(c.getComponents(), Component.Identifier.Axis.X, "x-axis");
-		int yAxisIdx = findCompIndex(c.getComponents(), Component.Identifier.Axis.Y, "y-axis");
-		int zAxisIdx = findCompIndex(c.getComponents(), Component.Identifier.Axis.Z, "z-axis");
-		int rzAxisIdx = findCompIndex(c.getComponents(), Component.Identifier.Axis.RZ, "rz-axis");
-		// get POV hat index 
-		int povIdx = findCompIndex(c.getComponents(), Component.Identifier.Axis.POV, "POV hat");
 		
 		// print details about any subcontrollers
 		Controller[] subCtrls = c.getControllers();
