@@ -10,6 +10,7 @@
 		<log4j.version>1.2.12</log4j.version>
 	</properties>
 	<dependencies>
+		<!-- Client OpenWebNet -->
 		<dependency>
 			<groupId>it.incalza</groupId>
 			<artifactId>bticino-openwebnet-client</artifactId>
@@ -25,10 +26,32 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.5</version>
 		</dependency>
+		<!-- JINPUT -->
 		<dependency>
 			<groupId>net.java.games</groupId>
 			<artifactId>jinput</artifactId>
-			<version>2.0.1</version>
+			<version>2.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>net.java.games</groupId>
+			<artifactId>jinput</artifactId>
+			<version>2.0.2</version>
+			<classifier>linux-natives</classifier>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>net.java.games</groupId>
+			<artifactId>jinput</artifactId>
+			<version>2.0.2</version>
+			<classifier>osx-natives</classifier>
+			<type>zip</type>
+		</dependency>
+		<dependency>
+			<groupId>net.java.games</groupId>
+			<artifactId>jinput</artifactId>
+			<version>2.0.2</version>
+			<classifier>windows-natives</classifier>
+			<type>zip</type>
 		</dependency>
 		<!-- JAXB -->
 		<dependency>
@@ -50,13 +73,6 @@
 			<groupId>com.sun.xml.bind</groupId>
 			<artifactId>jaxb-xjc</artifactId>
 			<version>2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>net.java.games</groupId>
-			<artifactId>jinput</artifactId>
-			<version>2.0.1</version>
-			<classifier>linux-natives</classifier>
-			<type>jar</type>
 		</dependency>
 	</dependencies>
 	<build>
@@ -97,14 +113,12 @@
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
 						<manifestEntries>
-							<Class-Path>jinput-drivers/</Class-Path>
 							<Class-Path>configuration/</Class-Path>
 						</manifestEntries>
 					</archive>
 					<outputDirectory>${project.build.directory}/MyHomeInputController</outputDirectory>
 					<excludes>
 						<exclude>configuration/*</exclude>
-						<exclude>jinput-drivers/*</exclude>
 					</excludes>
 				</configuration>
 			</plugin>
@@ -120,24 +134,6 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>org.lwjgl</groupId>
-									<artifactId>lwjgl-linux-64</artifactId>
-									<version>2.4.2</version>
-									<classifier>natives</classifier>
-									<type>jar</type>
-									<!-- <overWrite>true</overWrite> -->
-									<!-- <outputDirectory>${project.build.directory}/MyHomeInputController/natives</outputDirectory> -->
-									<includes>*.so,*.dylib,*.dll</includes>
-								</artifactItem>
-								<artifactItem>
-
-									<!-- <overWrite>true</overWrite> -->
-									<!-- <outputDirectory>${project.build.directory}/MyHomeInputController/natives</outputDirectory> -->
-									<includes>*.so,*.dylib,*.dll</includes>
-								</artifactItem>
-							</artifactItems>
 							<outputDirectory>${project.build.directory}/MyHomeInputController/lib</outputDirectory>
 							<overWriteIfNewer>true</overWriteIfNewer>
 							<scope>runtime</scope>
@@ -152,7 +148,6 @@
 				<targetPath>${project.build.directory}/MyHomeInputController</targetPath>
 				<includes>
 					<include>configuration/**</include>
-					 <include>jinput-drivers/**</include> 
 				</includes>
 			</resource>
 		</resources>
