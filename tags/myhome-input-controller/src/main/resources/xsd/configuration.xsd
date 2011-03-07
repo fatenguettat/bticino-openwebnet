@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.incalza.it/myhome/input/controller/configuration"
+	xmlns="http://www.incalza.it/myhome/input/controller/configuration"
+	elementFormDefault="qualified">
+
+	<xs:element name="ConfigurationCommands">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Commands" type="commands" minOccurs="0"
+					maxOccurs="1" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="command">
+		<xs:sequence>
+			<xs:element name="OpenWebNetComands" maxOccurs="1">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OpenWebNetComand" type="xs:string"
+							maxOccurs="unbounded" minOccurs="1" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="actionComand" type="actionComand" />
+		<xs:attribute name="room" type="room" use="optional" />
+	</xs:complexType>
+
+	<xs:complexType name="commands">
+		<xs:sequence>
+			<xs:element name="Command" type="command" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="actionComand">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ON" />
+			<xs:enumeration value="OFF" />
+			<xs:enumeration value="NORTH_WEST" />
+			<xs:enumeration value="NORTH_EAST" />
+			<xs:enumeration value="NORTH" />
+			<xs:enumeration value="SOUTH_WEST" />
+			<xs:enumeration value="SOUTH_EAST" />
+			<xs:enumeration value="SOUTH" />
+			<xs:enumeration value="EAST" />
+			<xs:enumeration value="WEST" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="room">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="ROOM_1" />
+			<xs:enumeration value="ROOM_2" />
+		</xs:restriction>
+	</xs:simpleType>
+
+</xs:schema>

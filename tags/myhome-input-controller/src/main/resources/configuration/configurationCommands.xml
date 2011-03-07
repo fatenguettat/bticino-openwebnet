@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfigurationCommands
+	xmlns="http://www.incalza.it/myhome/input/controller/configuration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.incalza.it/myhome/input/controller/configuration ../xsd/configuration.xsd ">
+	<Commands>
+		<Command actionComand="ON">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*1*1*61##</OpenWebNetComand>
+				<OpenWebNetComand>*1*1*62##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="OFF">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*1*0*61##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*62##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="NORTH" room="ROOM_1">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*1*52##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="SOUTH" room="ROOM_1">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*2*52##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="EAST" room="ROOM_1">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*1*51##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="WEST" room="ROOM_1">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*2*51##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="NORTH" room="ROOM_2">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*1*54##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="SOUTH" room="ROOM_2">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*2*54##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="EAST" room="ROOM_2">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*1*53##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+		<Command actionComand="WEST" room="ROOM_2">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*2*53##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
+	</Commands>
+</ConfigurationCommands>
