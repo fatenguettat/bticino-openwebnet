@@ -4,6 +4,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.incalza.it/myhome/input/controller/configuration ../xsd/configuration.xsd ">
 	<Commands>
+		<Command actionComand="BUTTON_0">
+			<SpecialComand>SWITCH_ROOM</SpecialComand>
+		</Command>
 		<Command actionComand="ON">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*1*61##</OpenWebNetComand>

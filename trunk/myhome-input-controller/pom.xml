@@ -3,11 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.incalza</groupId>
 	<artifactId>myhome-input-controller</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>MyHome Input Controller</name>
 	<properties>
 		<junit.version>4.8.2</junit.version>
 		<log4j.version>1.2.12</log4j.version>
+		<_out_dir>${project.build.directory}/MyHomeInputController-${project.version}</_out_dir>
 	</properties>
 	<dependencies>
 		<!-- Client OpenWebNet -->
@@ -116,7 +117,7 @@
 							<Class-Path>configuration/</Class-Path>
 						</manifestEntries>
 					</archive>
-					<outputDirectory>${project.build.directory}/MyHomeInputController</outputDirectory>
+					<outputDirectory>${_out_dir}</outputDirectory>
 					<excludes>
 						<exclude>configuration/*</exclude>
 					</excludes>
@@ -134,7 +135,7 @@
 							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>${project.build.directory}/MyHomeInputController/lib</outputDirectory>
+							<outputDirectory>${_out_dir}/lib</outputDirectory>
 							<overWriteIfNewer>true</overWriteIfNewer>
 							<scope>runtime</scope>
 						</configuration>
@@ -145,7 +146,7 @@
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
-				<targetPath>${project.build.directory}/MyHomeInputController</targetPath>
+				<targetPath>${_out_dir}</targetPath>
 				<includes>
 					<include>configuration/**</include>
 				</includes>
