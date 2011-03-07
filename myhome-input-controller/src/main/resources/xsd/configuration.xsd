@@ -14,16 +14,22 @@
 	</xs:element>
 
 	<xs:complexType name="command">
-		<xs:sequence>
-			<xs:element name="OpenWebNetComands" maxOccurs="1">
-				<xs:complexType>
-					<xs:sequence>
-						<xs:element name="OpenWebNetComand" type="xs:string"
-							maxOccurs="unbounded" minOccurs="1" />
-					</xs:sequence>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
+		<xs:choice>
+			<xs:sequence>
+				<xs:element name="OpenWebNetComands" maxOccurs="1">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OpenWebNetComand" type="xs:string"
+								maxOccurs="unbounded" minOccurs="1" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:sequence>
+				<xs:element name="SpecialComand" type="specialComand"
+					maxOccurs="1" />
+			</xs:sequence>
+		</xs:choice>
 		<xs:attribute name="actionComand" type="actionComand" />
 		<xs:attribute name="room" type="room" use="optional" />
 	</xs:complexType>
@@ -33,6 +39,13 @@
 			<xs:element name="Command" type="command" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
+
+	<xs:simpleType name="specialComand">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SWITCH_ROOM" />
+		</xs:restriction>
+	</xs:simpleType>
+
 
 	<xs:simpleType name="actionComand">
 		<xs:restriction base="xs:string">
@@ -46,6 +59,18 @@
 			<xs:enumeration value="SOUTH" />
 			<xs:enumeration value="EAST" />
 			<xs:enumeration value="WEST" />
+			<xs:enumeration value="BUTTON_0" />
+			<xs:enumeration value="BUTTON_1" />
+			<xs:enumeration value="BUTTON_2" />
+			<xs:enumeration value="BUTTON_3" />
+			<xs:enumeration value="BUTTON_4" />
+			<xs:enumeration value="BUTTON_5" />
+			<xs:enumeration value="BUTTON_6" />
+			<xs:enumeration value="BUTTON_7" />
+			<xs:enumeration value="BUTTON_8" />
+			<xs:enumeration value="BUTTON_9" />
+			<xs:enumeration value="BUTTON_10" />
+			<xs:enumeration value="BUTTON_11" />
 		</xs:restriction>
 	</xs:simpleType>
 
