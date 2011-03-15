@@ -187,7 +187,7 @@ public class Main implements InputControllerHandler
 					logger.error(e.getMessage(), e);
 				}
 			}
-		}
+		}	
 		commandsQueen.remove(command);
 
 	}
@@ -214,6 +214,11 @@ public class Main implements InputControllerHandler
 							break;
 					}
 					logger.debug("Change Room " + room);
+					try
+					{
+						Thread.sleep(500L);
+					}
+					catch (InterruptedException e){}
 					return;
 				}
 				else if (cmd.getOpenWebNetComands() != null && !commandsQueen.contains(cmd))
@@ -245,6 +250,14 @@ public class Main implements InputControllerHandler
 						}
 					}
 					commandsQueen.addLast(cmd);
+					try
+					{
+						Thread.sleep(250);
+					}
+					catch (InterruptedException e)
+					{
+						logger.error(e.getMessage(),e);
+					}
 				}
 			}
 		}
