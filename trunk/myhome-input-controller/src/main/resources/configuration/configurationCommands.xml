@@ -7,6 +7,11 @@
 		<Command actionComand="BUTTON_0">
 			<SpecialComand>SWITCH_ROOM</SpecialComand>
 		</Command>
+		<Command actionComand="BUTTON_7">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*2*1*52##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>
 		<Command actionComand="ON">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*1*61##</OpenWebNetComand>

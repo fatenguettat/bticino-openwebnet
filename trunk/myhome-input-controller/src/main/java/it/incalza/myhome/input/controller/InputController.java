@@ -2,9 +2,11 @@ package it.incalza.myhome.input.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 public class InputController implements Runnable
 {
+	private static final Logger logger = Logger.getLogger(InputController.class);
 	private final int SLEEP_TIME = 50; // in ms
 	private InputControllerHandler application = null;
 	private volatile boolean mAlive = true;
@@ -28,23 +30,25 @@ public class InputController implements Runnable
 			if (compassDir != GamePadController.NONE) application.handleEventPressed(GamePadController.getStringDirection(compassDir));
 			else application.handleEventReleased(GamePadController.getStringDirection(compassDir));
 
-			List<String> buttons = gpController.getButtonsInAction();
+			List<String> buttons = null;
+			if ((buttons = gpController.getButtonsInAction()).isEmpty() == false)
+			{
+				application.handleEventPressedButton(buttons);
+			}
 
-			application.handleEventPressedButton(buttons);
 			try
 			{
-				Thread.sleep(500);
+				if (buttonsLast.removeAll(buttons))
+				{
+					application.handleEventReleasedButton(buttonsLast);
+				}
 			}
-			catch (InterruptedException e)
+			catch (Exception e)
 			{
+				logger.error(e.getMessage(), e);
 			}
-			if (buttonsLast.isEmpty())
-				buttonsLast = buttons;
-			else if (buttonsLast.removeAll(buttons))
-			{
-				application.handleEventReleasedButton(buttonsLast);
-				buttonsLast = buttons;
-			}
+
+			buttonsLast = buttons;
 
 			try
 			{
