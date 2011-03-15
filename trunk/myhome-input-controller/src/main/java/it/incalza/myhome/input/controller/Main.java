@@ -303,7 +303,7 @@ public class Main implements InputControllerHandler
 				return c;
 			}
 		}
-		logger.debug("NOT found command! Action: " + action);
+//		logger.debug("NOT found command! Action: " + action);
 		return null;
 	}
 
