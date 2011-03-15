@@ -38,7 +38,15 @@ public class InputController implements Runnable
 
 			try
 			{
-				if (buttonsLast.removeAll(buttons))
+				for (String s : buttons)
+				{
+					if (buttonsLast.contains(s))
+					{
+						buttonsLast.remove(s);
+					}
+				}
+				
+				if (buttonsLast.isEmpty() == false)
 				{
 					application.handleEventReleasedButton(buttonsLast);
 				}
