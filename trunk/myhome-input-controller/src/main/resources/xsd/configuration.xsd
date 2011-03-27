@@ -71,6 +71,15 @@
 			<xs:enumeration value="BUTTON_9" />
 			<xs:enumeration value="BUTTON_10" />
 			<xs:enumeration value="BUTTON_11" />
+			<xs:enumeration value="BUTTON_12" />
+			<xs:enumeration value="BUTTON_13" />
+			<xs:enumeration value="BUTTON_14" />
+			<xs:enumeration value="BUTTON_15" />
+			<xs:enumeration value="BUTTON_16" />
+			<xs:enumeration value="BUTTON_17" />
+			<xs:enumeration value="BUTTON_18" />
+			<xs:enumeration value="BUTTON_19" />
+			<xs:enumeration value="BUTTON_20" />
 		</xs:restriction>
 	</xs:simpleType>
 
