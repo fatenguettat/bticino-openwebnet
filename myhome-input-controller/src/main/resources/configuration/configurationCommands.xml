@@ -9,24 +9,31 @@
 		</Command>
 		<Command actionComand="BUTTON_4">
 			<OpenWebNetComands>
-				<OpenWebNetComand>*2*1*52##</OpenWebNetComand>
+				<OpenWebNetComand>*2*1*59##</OpenWebNetComand>
 			</OpenWebNetComands>
 		</Command>
 		<Command actionComand="BUTTON_6">
 			<OpenWebNetComands>
-				<OpenWebNetComand>*2*2*52##</OpenWebNetComand>
+				<OpenWebNetComand>*2*2*59##</OpenWebNetComand>
 			</OpenWebNetComands>
 		</Command>
+		<Command actionComand="BUTTON_16">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*1*1*58##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>		
 		<Command actionComand="ON">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*1*61##</OpenWebNetComand>
 				<OpenWebNetComand>*1*1*62##</OpenWebNetComand>
+				<OpenWebNetComand>*1*1*57##</OpenWebNetComand>
 			</OpenWebNetComands>
 		</Command>
 		<Command actionComand="OFF">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*0*61##</OpenWebNetComand>
 				<OpenWebNetComand>*1*0*62##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*57##</OpenWebNetComand>
 			</OpenWebNetComands>
 		</Command>
 		<Command actionComand="SOUTH" room="ROOM_1">

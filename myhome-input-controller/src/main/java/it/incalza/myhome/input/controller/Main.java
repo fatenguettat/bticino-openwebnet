@@ -142,9 +142,8 @@ public class Main implements InputControllerHandler
 			logger.info("Released Action " + action);
 			for (Command cmd : commandsQueen)
 			{
-				if (!cmd.getActionComand().name().startsWith("BUTTON"))
-					sentStop(cmd);
-			}	
+				if (!cmd.getActionComand().name().startsWith("BUTTON")) sentStop(cmd);
+			}
 			lastAction = action;
 		}
 	}
@@ -187,7 +186,7 @@ public class Main implements InputControllerHandler
 					logger.error(e.getMessage(), e);
 				}
 			}
-		}	
+		}
 		commandsQueen.remove(command);
 
 	}
@@ -209,7 +208,7 @@ public class Main implements InputControllerHandler
 						case ROOM_2:
 							room = Room.ROOM_1;
 							break;
-						default:	
+						default:
 							room = Room.ROOM_1;
 							break;
 					}
@@ -218,7 +217,9 @@ public class Main implements InputControllerHandler
 					{
 						Thread.sleep(500L);
 					}
-					catch (InterruptedException e){}
+					catch (InterruptedException e)
+					{
+					}
 					return;
 				}
 				else if (cmd.getOpenWebNetComands() != null && !commandsQueen.contains(cmd))
@@ -252,11 +253,13 @@ public class Main implements InputControllerHandler
 					commandsQueen.addLast(cmd);
 					try
 					{
-						Thread.sleep(250);
+						if (cmd.getActionComand().equals(ActionComand.BUTTON_16))
+							Thread.sleep(500);
+						else Thread.sleep(250);
 					}
 					catch (InterruptedException e)
 					{
-						logger.error(e.getMessage(),e);
+						logger.error(e.getMessage(), e);
 					}
 				}
 			}
@@ -303,7 +306,7 @@ public class Main implements InputControllerHandler
 				return c;
 			}
 		}
-//		logger.debug("NOT found command! Action: " + action);
+		// logger.debug("NOT found command! Action: " + action);
 		return null;
 	}
 

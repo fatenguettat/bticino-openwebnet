@@ -30,7 +30,9 @@ import net.java.games.input.Rumbler;
 public class GamePadController
 {
 	private static final float _x0 = 0.003921628f;
+	private static final float _x1 = -1.5258789E-5f;
 	private static final float _y0 = -0.019607842f;
+	private static final float _y1 =  0.015518427f;
 	public static final int NUM_BUTTONS = 20;
 
 	// public stick and hat compass positions
@@ -266,25 +268,25 @@ public class GamePadController
 	} // end of getXYStickDir()
 
 	private int getCompassDir(int xA, int yA)
-	// Return the axes as a single compass value
+	// Return the axes as a single compass value  
 	{
 		float xCoord = comps[xA].getPollData();
 		float yCoord = comps[yA].getPollData();
-		// System.out.println("(x,y): (" + xCoord + "," + yCoord + ")");
+//		System.out.println("(x,y): (" + xCoord + "," + yCoord + ")");
 
-		if (xCoord == _x0 && yCoord == _y0 && !on)
+		if ((xCoord == _x0  && yCoord == _y0) || (xCoord == _x1 && yCoord == _x1) && !on)
 		{
 			on = true;
 			return ON;
 		}
-		else if (xCoord == _x0 && yCoord == _x0 && on)
+		else if (((xCoord == _x0 && yCoord == _x0) || (xCoord == _x1 && yCoord == _y1)) && on)
 		{
 			on = false;
 			return OFF;
 		}
 
-		int xc = Math.round(xCoord);
-		int yc = Math.round(yCoord);
+		int xc = Math.round(Double.valueOf(xCoord).floatValue());
+		int yc = Math.round(Double.valueOf(yCoord).floatValue());
 		// System.out.println("Rounded (x,y): (" + xc + "," + yc + ")");
 
 		if ((yc == -1) && (xc == -1)) // (y,x)
