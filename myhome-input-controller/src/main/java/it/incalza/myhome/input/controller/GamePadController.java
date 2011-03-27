@@ -285,8 +285,8 @@ public class GamePadController
 			return OFF;
 		}
 
-		int xc = Math.round(Double.valueOf(xCoord).floatValue());
-		int yc = Math.round(Double.valueOf(yCoord).floatValue());
+		int xc = Math.round(xCoord);
+		int yc = Math.round(yCoord);
 		// System.out.println("Rounded (x,y): (" + xc + "," + yc + ")");
 
 		if ((yc == -1) && (xc == -1)) // (y,x)
