@@ -11,17 +11,26 @@
 			<OpenWebNetComands>
 				<OpenWebNetComand>*2*1*59##</OpenWebNetComand>
 			</OpenWebNetComands>
+			<SpecialComand>PRESSED</SpecialComand>
 		</Command>
 		<Command actionComand="BUTTON_6">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*2*2*59##</OpenWebNetComand>
 			</OpenWebNetComands>
+			<SpecialComand>PRESSED</SpecialComand>
 		</Command>
 		<Command actionComand="BUTTON_16">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*1*58##</OpenWebNetComand>
 			</OpenWebNetComands>
+			<SpecialComand>PRESSED</SpecialComand>
 		</Command>		
+		<Command actionComand="BUTTON_17">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*1*1*0##</OpenWebNetComand>
+			</OpenWebNetComands>
+			<SpecialComand>SWITCH</SpecialComand>
+		</Command>			
 		<Command actionComand="ON">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*1*61##</OpenWebNetComand>

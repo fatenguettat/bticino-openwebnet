@@ -19,11 +19,11 @@
 				<xs:element name="OpenWebNetComands" maxOccurs="1">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="OpenWebNetComand" type="xs:string"
-								maxOccurs="unbounded" minOccurs="1" />
+							<xs:element name="OpenWebNetComand" type="xs:string" maxOccurs="unbounded" minOccurs="1" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="SpecialComand" type="specialComand" minOccurs="0" maxOccurs="1" />
 			</xs:sequence>
 			<xs:sequence>
 				<xs:element name="SpecialComand" type="specialComand" maxOccurs="1" />
