@@ -28,7 +28,6 @@ public class Main implements InputControllerHandler
 	private String lastAction = GamePadController.getStringDirection(GamePadController.OFF);
 	private Room room = Room.ROOM_1;
 	private OpenWebNetClient client = null;
-	private boolean settingOpenWebNetClient = false;
 	private ArrayDeque<Command> commandsQueen = new ArrayDeque<Command>();
 	private static ConfigurationCommands configurationCommands;
 	private static OpenWebNetClientPoolConnection clientPoolConnection;
@@ -41,92 +40,79 @@ public class Main implements InputControllerHandler
 			JAXBContext jc = JAXBContext.newInstance(it.incalza.myhome.input.controller.configuration.ObjectFactory.class);
 			Unmarshaller u = jc.createUnmarshaller();
 			InputStream inputStream = ClassLoader.getSystemResourceAsStream(fileName);
-			if (inputStream == null) { throw new NullPointerException("The configuration file is null!"); }
+			if (inputStream == null)
+			{
+				throw new NullPointerException("The configuration file is null!");
+			}
 			configurationCommands = (ConfigurationCommands) u.unmarshal(inputStream);
 			clientPoolConnection = OpenWebNetClientPoolConnection.getInstance();
-		}
-		catch (JAXBException e)
+		} catch (JAXBException e)
 		{
 			logger.error(e.getMessage(), e);
 		}
 	}
 
 	public static void main(String[] args)
-	{
-		boolean client = Boolean.valueOf(System.getProperty("client", "true"));
+	{	
 		Main main = new Main();
-		main.init(client);
+		main.init();
 	}
 
-	public void init(boolean openWebNetClient)
+	public void init()
 	{
-		settingOpenWebNetClient = openWebNetClient;
 		inputController = new InputController(this);
 		controllerThread = new Thread(inputController);
 		inputController.setThread(controllerThread);
 		controllerThread.start();
-		if (openWebNetClient)
+		try
 		{
-			try
-			{
-				client = clientPoolConnection.newOpenWebNetClient();
-			}
-			catch (IOException e)
-			{
-				logger.debug(e.getMessage(), e);
-			}
+			client = clientPoolConnection.newOpenWebNetClient();
+		} catch (IOException e)
+		{
+			logger.debug(e.getMessage(), e);
 		}
 	}
 
 	public synchronized void handleEventPressed(String action)
 	{
-
 		if (!lastAction.equalsIgnoreCase(action))
 		{
 			logger.info("Pressed Action " + action);
 			Command c = getCommand(action);
 			if (c != null && !commandsQueen.contains(c))
 			{
-				if (settingOpenWebNetClient)
+				if (checkAndCreateConnectionOpenWebNetClient())
 				{
-					checkAndCreateConnectionOpenWebNetClient();
-					if (client.isConnected())
+					try
 					{
-						try
+						for (String own : c.getOpenWebNetComands().getOpenWebNetComand())
 						{
-							for (String own : c.getOpenWebNetComands().getOpenWebNetComand())
-							{
-								client.write(new OpenWebNetImpl().createComandOpen(own));
-								logger.debug("Pressed Action " + action + " sent comand own " + own);
-							}
+							client.write(new OpenWebNetImpl().createComandOpen(own));
+							logger.debug("Pressed Action " + action + " sent comand own " + own);
 						}
-						catch (Exception e)
-						{
-							logger.error(e.getMessage(), e);
-						}
+					} catch (Exception e)
+					{
+						logger.error(e.getMessage(), e);
+					}
+					if ((lastAction = action).equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.OFF)) || (lastAction = action).equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.ON)))
+					{
+						return;
+					}
+					else
+					{
+						if ((c.getActionComand().equals(ActionComand.SOUTH) && commandsQueen.contains(getCommand(ActionComand.NORTH.name()))))
+							commandsQueen.remove(getCommand(ActionComand.NORTH.name()));
+						else if ((c.getActionComand().equals(ActionComand.NORTH) && commandsQueen.contains(getCommand(ActionComand.SOUTH.name()))))
+							commandsQueen.remove(getCommand(ActionComand.SOUTH.name()));
+						if ((c.getActionComand().equals(ActionComand.WEST) && commandsQueen.contains(getCommand(ActionComand.EAST.name()))))
+							commandsQueen.remove(getCommand(ActionComand.EAST.name()));
+						else if ((c.getActionComand().equals(ActionComand.EAST) && commandsQueen.contains(getCommand(ActionComand.WEST.name()))))
+							commandsQueen.remove(getCommand(ActionComand.WEST.name()));
+						logger.debug("Adding in to queen commands sent");
+						commandsQueen.addLast(c);
 					}
 				}
-				else
-				{
-					for (String own : c.getOpenWebNetComands().getOpenWebNetComand())
-					{
-						logger.debug("Pressed Action " + action + " sent comand own " + own);
-					}
-				}
-				lastAction = action;
-				if (lastAction.equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.OFF)) || lastAction.equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.ON)))
-				{
-					return;
-				}
-				else
-				{
-					if ((c.getActionComand().equals(ActionComand.SOUTH) && commandsQueen.contains(getCommand(ActionComand.NORTH.name())))) commandsQueen.remove(getCommand(ActionComand.NORTH.name()));
-					else if ((c.getActionComand().equals(ActionComand.NORTH) && commandsQueen.contains(getCommand(ActionComand.SOUTH.name())))) commandsQueen.remove(getCommand(ActionComand.SOUTH.name()));
-					if ((c.getActionComand().equals(ActionComand.WEST) && commandsQueen.contains(getCommand(ActionComand.EAST.name())))) commandsQueen.remove(getCommand(ActionComand.EAST.name()));
-					else if ((c.getActionComand().equals(ActionComand.EAST) && commandsQueen.contains(getCommand(ActionComand.WEST.name())))) commandsQueen.remove(getCommand(ActionComand.WEST.name()));
-					logger.debug("Adding in to queen commands sent");
-					commandsQueen.addLast(c);
-				}
+
 			}
 		}
 	}
@@ -136,59 +122,16 @@ public class Main implements InputControllerHandler
 		if (lastAction.equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.OFF)) || lastAction.equalsIgnoreCase(GamePadController.getStringDirection(GamePadController.ON)) || lastAction.equalsIgnoreCase(action))
 		{
 			return;
-		}
-		else
+		} else
 		{
 			logger.info("Released Action " + action);
 			for (Command cmd : commandsQueen)
 			{
-				if (!cmd.getActionComand().name().startsWith("BUTTON")) sentStop(cmd);
+				if (!cmd.getActionComand().name().startsWith("BUTTON"))
+					sentStop(cmd);
 			}
 			lastAction = action;
 		}
-	}
-
-	private void sentStop(Command command)
-	{
-
-		if (settingOpenWebNetClient)
-		{
-			checkAndCreateConnectionOpenWebNetClient();
-			if (client.isConnected())
-			{
-				try
-				{
-					for (String own : command.getOpenWebNetComands().getOpenWebNetComand())
-					{
-						OpenWebNet ownSent = new OpenWebNetImpl().createComandOpen(own);
-						client.write(new OpenWebNetImpl().createComandOpen(ownSent.getWho(), new TagWhat(ownSent.getWho(), "0"), ownSent.getWhere()));
-						logger.debug("CommandPoll remove " + command.getActionComand() + " sent comand own " + own);
-					}
-				}
-				catch (Exception e)
-				{
-					logger.error(e.getMessage(), e);
-				}
-			}
-		}
-		else
-		{
-			for (String own : command.getOpenWebNetComands().getOpenWebNetComand())
-			{
-				try
-				{
-					OpenWebNet ownSent = new OpenWebNetImpl().createComandOpen(own);
-					OpenWebNet ownSendig = new OpenWebNetImpl().createComandOpen(ownSent.getWho(), new TagWhat(ownSent.getWho(), "0"), ownSent.getWhere());
-					logger.debug("CommandPoll remove " + command.getActionComand() + " sent comand own " + ownSendig.getComand());
-				}
-				catch (Exception e)
-				{
-					logger.error(e.getMessage(), e);
-				}
-			}
-		}
-		commandsQueen.remove(command);
-
 	}
 
 	public void handleEventPressedButton(List<String> buttons)
@@ -213,54 +156,41 @@ public class Main implements InputControllerHandler
 							break;
 					}
 					logger.debug("Change Room " + room);
-					try
-					{
-						Thread.sleep(500L);
-					}
-					catch (InterruptedException e)
-					{
-					}
-					return;
-				}
+				} 
 				else if (cmd.getOpenWebNetComands() != null && !commandsQueen.contains(cmd))
 				{
-					if (settingOpenWebNetClient)
+					if (checkAndCreateConnectionOpenWebNetClient())
 					{
-						checkAndCreateConnectionOpenWebNetClient();
-						if (client.isConnected())
+						try
 						{
-							try
+							for (String own : cmd.getOpenWebNetComands().getOpenWebNetComand())
 							{
-								for (String own : cmd.getOpenWebNetComands().getOpenWebNetComand())
-								{
-									client.write(new OpenWebNetImpl().createComandOpen(own));
-									logger.debug("Pressed Button " + button + " sent comand own " + own);
-								}
+								client.write(new OpenWebNetImpl().createComandOpen(own));
+								logger.debug("Pressed Button " + button + " sent comand own " + own);
 							}
-							catch (Exception e)
-							{
-								logger.error(e.getMessage(), e);
-							}
+						} catch (Exception e)
+						{
+							logger.error(e.getMessage(), e);
 						}
+						commandsQueen.addLast(cmd);
 					}
+				}
+				else if (cmd.getOpenWebNetComands() != null && commandsQueen.contains(cmd)  && 
+						 (cmd.getSpecialComand() != null && cmd.getSpecialComand().equals(SpecialComand.SWITCH)))
+				{
+					sentStop(cmd);
+				}
+				try
+				{
+					if (cmd.getSpecialComand() != null && 
+							(cmd.getSpecialComand().equals(SpecialComand.PRESSED) || 
+							 cmd.getSpecialComand().equals(SpecialComand.SWITCH_ROOM)))
+						Thread.sleep(500);
 					else
-					{
-						for (String own : cmd.getOpenWebNetComands().getOpenWebNetComand())
-						{
-							logger.debug("Pressed Button " + button + " sent comand own " + own);
-						}
-					}
-					commandsQueen.addLast(cmd);
-					try
-					{
-						if (cmd.getActionComand().equals(ActionComand.BUTTON_16))
-							Thread.sleep(500);
-						else Thread.sleep(250);
-					}
-					catch (InterruptedException e)
-					{
-						logger.error(e.getMessage(), e);
-					}
+						Thread.sleep(250);
+				} catch (InterruptedException e)
+				{
+					logger.error(e.getMessage(), e);
 				}
 			}
 		}
@@ -271,24 +201,26 @@ public class Main implements InputControllerHandler
 		for (String button : buttons)
 		{
 			Command cmd = getCommand(button);
-			if (cmd != null && cmd.getOpenWebNetComands() != null && commandsQueen.contains(cmd))
+			if (cmd != null && cmd.getOpenWebNetComands() != null && commandsQueen.contains(cmd) && 
+				(cmd.getSpecialComand() != null && !cmd.getSpecialComand().equals(SpecialComand.SWITCH)))
 			{
 				sentStop(cmd);
 			}
 		}
 	}
 
-	private void checkAndCreateConnectionOpenWebNetClient()
+	private boolean checkAndCreateConnectionOpenWebNetClient()
 	{
 		try
 		{
-			if (client == null || !client.isConnected()) client = clientPoolConnection.newOpenWebNetClient();
+			if (client == null || !client.isConnected())
+				client = clientPoolConnection.newOpenWebNetClient();
 			Thread.sleep(50);
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			logger.error(e.getMessage(), e);
 		}
+		return client.isConnected();
 	}
 
 	private Command getCommand(String action)
@@ -299,15 +231,33 @@ public class Main implements InputControllerHandler
 			{
 				logger.debug("Found command! Action: " + action + " Room " + room);
 				return c;
-			}
-			else if (c.getRoom() == null && c.getActionComand().name().equalsIgnoreCase(action))
+			} else if (c.getRoom() == null && c.getActionComand().name().equalsIgnoreCase(action))
 			{
 				logger.debug("Found command! Action: " + action);
 				return c;
 			}
 		}
-		// logger.debug("NOT found command! Action: " + action);
 		return null;
+	}
+	
+	private void sentStop(Command command)
+	{
+		if (checkAndCreateConnectionOpenWebNetClient())
+		{
+			try
+			{
+				for (String own : command.getOpenWebNetComands().getOpenWebNetComand())
+				{
+					OpenWebNet ownSent = new OpenWebNetImpl().createComandOpen(own);
+					client.write(new OpenWebNetImpl().createComandOpen(ownSent.getWho(), new TagWhat(ownSent.getWho(), "0"), ownSent.getWhere()));
+					logger.debug("CommandPoll remove " + command.getActionComand() + " sent comand own " + own);
+					commandsQueen.remove(command);
+				}
+			} catch (Exception e)
+			{
+				logger.error(e.getMessage(), e);
+			}
+		}
 	}
 
 }
