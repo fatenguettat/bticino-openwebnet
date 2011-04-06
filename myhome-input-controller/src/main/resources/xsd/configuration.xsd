@@ -26,8 +26,7 @@
 				</xs:element>
 			</xs:sequence>
 			<xs:sequence>
-				<xs:element name="SpecialComand" type="specialComand"
-					maxOccurs="1" />
+				<xs:element name="SpecialComand" type="specialComand" maxOccurs="1" />
 			</xs:sequence>
 		</xs:choice>
 		<xs:attribute name="actionComand" type="actionComand" />
@@ -43,6 +42,8 @@
 	<xs:simpleType name="specialComand">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="SWITCH_ROOM" />
+			<xs:enumeration value="SWITCH" />
+			<xs:enumeration value="PRESSED" />
 		</xs:restriction>
 	</xs:simpleType>
 
