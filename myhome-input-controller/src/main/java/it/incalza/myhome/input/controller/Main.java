@@ -214,7 +214,7 @@ public class Main implements InputControllerHandler
 	{
 		for (JAXBElement<?> cnt : cmd.getContent())
 		{
-			if (cnt.getValue().getClass().isInstance(OpenWebNetComands.class))
+			if (cnt.getValue().getClass().isInstance(SpecialComand.class))
 				return (SpecialComand) cnt.getValue();
 		}
 		return null;
