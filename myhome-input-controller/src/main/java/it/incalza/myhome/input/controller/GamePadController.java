@@ -1,5 +1,24 @@
 package it.incalza.myhome.input.controller;
 
+// GamePadController.java
+// Andrew Davison, October 2006, ad@fivedots.coe.psu.ac.th
+
+/*
+ * This controller supports a game pad with two
+ * analog sticks with axes (x,y) and (z,rz), 12 buttons, a
+ * D-Pad acting as a point-of-view (POV) hat, and a
+ * single rumbler.
+ * The sticks are assumed to be absolute and analog, while the
+ * hat and buttons are absolute and digital.
+ * -----
+ * The sticks and hat data are accessed as compass directions
+ * (e.g. NW, NORTH). The compass constants are public so they can be
+ * used in the rest of the application.
+ * The buttons values (booleans) can be accessed individually, or
+ * together in an array.
+ * The rumbler can be switched on/off, and its current status retrieved.
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import net.java.games.input.Component;
@@ -79,8 +98,7 @@ public class GamePadController
 		while (i < cs.length)
 		{
 			type = cs[i].getType();
-			if ((type == Controller.Type.GAMEPAD) || (type == Controller.Type.STICK)) 
-				break;
+			if ((type == Controller.Type.GAMEPAD) || (type == Controller.Type.STICK)) break;
 			i++;
 		}
 
