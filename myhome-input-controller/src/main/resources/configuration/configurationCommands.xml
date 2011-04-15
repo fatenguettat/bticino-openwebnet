@@ -7,17 +7,43 @@
 		<Command actionComand="BUTTON_0">
 			<SpecialComand>SWITCH_ROOM</SpecialComand>
 		</Command>
-		<Command actionComand="BUTTON_4">
+		<Command actionComand="BUTTON_4" methodCommand="BUTTON">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*2*1*59##</OpenWebNetComand>
 			</OpenWebNetComands>
 		</Command>
-		<Command actionComand="BUTTON_6">
+		<Command actionComand="BUTTON_6"  methodCommand="BUTTON">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*2*2*59##</OpenWebNetComand>
 			</OpenWebNetComands>
 		</Command>
-		<Command actionComand="BUTTON_16">
+		<!-- Command actionComand="BUTTON_16">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*1*1*58##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command-->			
+		<Command actionComand="BUTTON_17" methodCommand="SWITCH">
+			<OpenWebNetComands>
+				<OpenWebNetComand>*1*0*21##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*22##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*23##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*24##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*25##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*26##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*27##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*28##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*11##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*13##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*14##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*15##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*16##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*17##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*31##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*32##</OpenWebNetComand>
+				<OpenWebNetComand>*1*0*33##</OpenWebNetComand>
+			</OpenWebNetComands>
+		</Command>	
+		<Command actionComand="BUTTON_18" methodCommand="SWITCH">
 			<OpenWebNetComands>
 				<OpenWebNetComand>*1*1*58##</OpenWebNetComand>
 			</OpenWebNetComands>

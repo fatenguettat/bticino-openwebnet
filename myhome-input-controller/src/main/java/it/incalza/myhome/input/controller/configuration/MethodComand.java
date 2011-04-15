@@ -13,32 +13,32 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for room.
+ * <p>Java class for methodComand.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
  * <pre>
- * &lt;simpleType name="room">
+ * &lt;simpleType name="methodComand">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
- *     &lt;enumeration value="ROOM_1"/>
- *     &lt;enumeration value="ROOM_2"/>
+ *     &lt;enumeration value="SWITCH"/>
+ *     &lt;enumeration value="BUTTON"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
  * 
  */
-@XmlType(name = "room")
+@XmlType(name = "methodComand")
 @XmlEnum
-public enum Room {
+public enum MethodComand {
 
-    ROOM_1,
-    ROOM_2;
+    SWITCH,
+    BUTTON;
 
     public String value() {
         return name();
     }
 
-    public static Room fromValue(String v) {
+    public static MethodComand fromValue(String v) {
         return valueOf(v);
     }
 

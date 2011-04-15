@@ -8,6 +8,7 @@ import it.incalza.bt.openwebnet.protocol.tag.TagWhat;
 import it.incalza.myhome.input.controller.configuration.ActionComand;
 import it.incalza.myhome.input.controller.configuration.Command;
 import it.incalza.myhome.input.controller.configuration.ConfigurationCommands;
+import it.incalza.myhome.input.controller.configuration.MethodComand;
 import it.incalza.myhome.input.controller.configuration.Room;
 import it.incalza.myhome.input.controller.configuration.SpecialComand;
 import java.io.IOException;
@@ -189,7 +190,7 @@ public class Main implements InputControllerHandler
 					}
 					logger.debug("Change Room " + room);
 				}
-				else if (cmd.getOpenWebNetComands() != null && cmd.getActionComand().equals(ActionComand.BUTTON_17) && commandsQueen.contains(cmd))
+				else if (cmd.getOpenWebNetComands() != null && cmd.getMethodCommand().equals(MethodComand.SWITCH) && commandsQueen.contains(cmd))
 				{					
 					checkAndCreateConnectionOpenWebNetClient();
 					if (client.isConnected())
@@ -217,7 +218,7 @@ public class Main implements InputControllerHandler
 				try
 				{
 					if ((cmd.getSpecialComand() != null && cmd.getSpecialComand().equals(SpecialComand.SWITCH_ROOM)) || 
-							(cmd.getActionComand().equals(ActionComand.BUTTON_16) && cmd.getActionComand().equals(ActionComand.BUTTON_17))) 
+							(cmd.getMethodCommand() != null && cmd.getMethodCommand().equals(MethodComand.SWITCH))) 
 						Thread.sleep(500);
 					else Thread.sleep(250);
 				}
@@ -234,7 +235,9 @@ public class Main implements InputControllerHandler
 		for (String button : buttons)
 		{
 			Command cmd = getCommand(button);
-			if (cmd != null && cmd.getOpenWebNetComands() != null && !cmd.getActionComand().equals(ActionComand.BUTTON_17) && commandsQueen.contains(cmd))
+			if (cmd != null && cmd.getOpenWebNetComands() != null &&
+					cmd.getMethodCommand()!= null && cmd.getMethodCommand().equals(MethodComand.BUTTON) && 
+					commandsQueen.contains(cmd))
 			{
 				sentStop(cmd);
 			}
