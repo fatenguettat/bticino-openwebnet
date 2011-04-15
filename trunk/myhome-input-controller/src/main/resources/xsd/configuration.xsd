@@ -26,10 +26,10 @@
 				</xs:element>
 			</xs:sequence>
 			<xs:sequence>
-				<xs:element name="SpecialComand" type="specialComand"
-					maxOccurs="1" />
+				<xs:element name="SpecialComand" type="specialComand" maxOccurs="1" />
 			</xs:sequence>
 		</xs:choice>
+		<xs:attribute name="methodCommand" type="methodComand" use="optional" />
 		<xs:attribute name="actionComand" type="actionComand" />
 		<xs:attribute name="room" type="room" use="optional" />
 	</xs:complexType>
@@ -46,6 +46,12 @@
 		</xs:restriction>
 	</xs:simpleType>
 
+	<xs:simpleType name="methodComand">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SWITCH" />
+			<xs:enumeration value="BUTTON" />
+		</xs:restriction>
+	</xs:simpleType>
 
 	<xs:simpleType name="actionComand">
 		<xs:restriction base="xs:string">
