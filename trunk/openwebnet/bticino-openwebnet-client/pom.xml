@@ -6,7 +6,6 @@
 		<version>0.0.1</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>it.incalza</groupId>
 	<artifactId>bticino-openwebnet-client</artifactId>
 	<version>${project.parent.version}</version>
 	<name>Bticino Client Open Web Net</name>
