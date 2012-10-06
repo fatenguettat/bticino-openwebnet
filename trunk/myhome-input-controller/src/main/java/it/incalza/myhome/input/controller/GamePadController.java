@@ -30,11 +30,9 @@ import net.java.games.input.Rumbler;
 public class GamePadController
 {
 	private static final float _x0 = 0.003921628f;
-	private static final float _x2 = 0.031754017f;
 	private static final float _x1 = -1.5258789E-5f;
 	private static final float _y0 = -0.019607842f;
 	private static final float _y1 =  0.015518427f;
-	private static final float _y2 =  -0.008041501f;
 	public static final int NUM_BUTTONS = 20;
 
 	// public stick and hat compass positions
@@ -81,7 +79,7 @@ public class GamePadController
 
 		// get the game pad controller
 		controller = findGamePad(cs);
-		System.out.println("Game controller: " + controller.getName() + ", " + controller.getType());
+		System.out.println("Selected Game controller: " + controller.getName() + ", " + controller.getType());
 
 		// collect indices for the required game pad components
 		findCompIndices(controller);
@@ -99,6 +97,7 @@ public class GamePadController
 		int i = 0;
 		while (i < cs.length)
 		{
+		  	System.out.println(i +") Game controller: " + cs[i].getName() + ", " + cs[i].getType());
 			type = cs[i].getType();
 			if ((type == Controller.Type.GAMEPAD) || (type == Controller.Type.STICK)) break;
 			i++;
@@ -276,7 +275,7 @@ public class GamePadController
 		float yCoord = comps[yA].getPollData();
 //		System.out.println("(x,y): (" + xCoord + "," + yCoord + ")");
 
-		if ((xCoord == _x0  && yCoord == _y0) || (xCoord == _x1 && yCoord == _x1) || (xCoord == _x2 && yCoord == _y2) && !on)
+		if ((xCoord == _x0  && yCoord == _y0) || (xCoord == _x1 && yCoord == _x1) && !on)
 		{
 			on = true;
 			return ON;
