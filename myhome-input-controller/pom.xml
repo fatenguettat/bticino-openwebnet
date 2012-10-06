@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>it.incalza</groupId>
 	<artifactId>myhome-input-controller</artifactId>
@@ -105,13 +104,6 @@
 			<plugin>
 				<groupId>org.jvnet.jaxb2.maven2</groupId>
 				<artifactId>maven-jaxb2-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
 				<configuration>
 					<extension>true</extension>
 					<generateDirectory>${basedir}/src/main/java</generateDirectory>
@@ -126,7 +118,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>it.incalza.myhome.input.controller.Main</mainClass>								
+							<mainClass>it.incalza.myhome.input.controller.Main</mainClass>
 							<classpathPrefix>lib/</classpathPrefix>
 						</manifest>
 						<manifestEntries>
@@ -148,7 +140,9 @@
 						<id>copy-dependencies</id>
 						<phase>package</phase>
 						<goals>
-							<goal>copy-dependencies</goal>
+							<goal>
+								build-classpath
+							</goal>
 						</goals>
 						<configuration>
 							<outputDirectory>${_out_dir}/lib</outputDirectory>
@@ -166,10 +160,17 @@
 			<name>Maven 2</name>
 			<url>http://repo1.maven.org/maven2/</url>
 		</repository>
+
 		<repository>
 			<id>repository.jinput</id>
 			<name>Maven jinput</name>
 			<url>http://www.newdawnsoftware.com/maven2/</url>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jaxb2</id>
+			<url>http://repository.highsource.org/maven2/releases/</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
