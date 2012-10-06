@@ -1,26 +1,11 @@
 package it.incalza.myhome.input.controller;
 
-// GamePadController.java
-// Andrew Davison, October 2006, ad@fivedots.coe.psu.ac.th
-
-/*
- * This controller supports a game pad with two
- * analog sticks with axes (x,y) and (z,rz), 12 buttons, a
- * D-Pad acting as a point-of-view (POV) hat, and a
- * single rumbler.
- * The sticks are assumed to be absolute and analog, while the
- * hat and buttons are absolute and digital.
- * -----
- * The sticks and hat data are accessed as compass directions
- * (e.g. NW, NORTH). The compass constants are public so they can be
- * used in the rest of the application.
- * The buttons values (booleans) can be accessed individually, or
- * together in an array.
- * The rumbler can be switched on/off, and its current status retrieved.
- */
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
+
 import net.java.games.input.Component;
 import net.java.games.input.Component.POV;
 import net.java.games.input.Controller;
@@ -29,6 +14,7 @@ import net.java.games.input.Rumbler;
 
 public class GamePadController
 {
+	private static final Logger logger = Logger.getLogger(InputController.class);
 	private static final float _x0 = 0.003921628f;
 	private static final float _x1 = -1.5258789E-5f;
 	private static final float _y0 = -0.019607842f;
@@ -75,11 +61,11 @@ public class GamePadController
 			System.out.println("No controllers found");
 			System.exit(0);
 		}
-		else System.out.println("Num. controllers: " + cs.length);
+		else logger.info("Num. controllers: " + cs.length);
 
 		// get the game pad controller
 		controller = findGamePad(cs);
-		System.out.println("Selected Game controller: " + controller.getName() + ", " + controller.getType());
+		logger.info("Selected Game controller: " + controller.getName() + ", " + controller.getType());
 
 		// collect indices for the required game pad components
 		findCompIndices(controller);
@@ -97,7 +83,7 @@ public class GamePadController
 		int i = 0;
 		while (i < cs.length)
 		{
-		  	System.out.println(i +") Game controller: " + cs[i].getName() + ", " + cs[i].getType());
+		  	logger.info(i +") Game controller: " + cs[i].getName() + ", " + cs[i].getType());
 			type = cs[i].getType();
 			if ((type == Controller.Type.GAMEPAD) || (type == Controller.Type.STICK)) break;
 			i++;
@@ -105,10 +91,10 @@ public class GamePadController
 
 		if (i == cs.length)
 		{
-			System.out.println("No game pad found");
+			logger.info("No game pad found");
 			System.exit(0);
 		}
-		else System.out.println("Game pad index: " + i);
+		else logger.info("Game pad index: " + i);
 
 		return cs[i];
 	} // end of findGamePad()
@@ -123,10 +109,10 @@ public class GamePadController
 		comps = controller.getComponents();
 		if (comps.length == 0)
 		{
-			System.out.println("No Components found");
+			logger.info("No Components found");
 			System.exit(0);
 		}
-		else System.out.println("Num. Components: " + comps.length);
+		else logger.info("Num. Components: " + comps.length);
 
 		// get the indices for the axes of the analog sticks: (x,y) and (z,rz)
 		xAxisIdx = findCompIndex(comps, Component.Identifier.Axis.X, "x-axis");
@@ -153,12 +139,12 @@ public class GamePadController
 			c = comps[i];
 			if ((c.getIdentifier() == id) && !c.isRelative())
 			{
-				System.out.println("Found " + c.getName() + "; index: " + i);
+				logger.info("Found " + c.getName() + "; index: " + i);
 				return i;
 			}
 		}
 
-		System.out.println("No " + nm + " component found");
+		logger.info("No " + nm + " component found");
 		return -1;
 	} // end of findCompIndex()
 
@@ -180,11 +166,11 @@ public class GamePadController
 			if (isButton(c))
 			{ // deal with a button
 				if (numButtons == NUM_BUTTONS) // already enough buttons
-				System.out.println("Found an extra button; index: " + i + ". Ignoring it");
+				logger.info("Found an extra button; index: " + i + ". Ignoring it");
 				else
 				{
 					buttonsIdx[numButtons] = i; // store button index
-					System.out.println("Found " + c.getName() + "; Ientifier: " + c.getIdentifier().getName() + "; index: " + i);
+					logger.info("Found " + c.getName() + "; Ientifier: " + c.getIdentifier().getName() + "; index: " + i);
 					numButtons++;
 				}
 			}
@@ -193,7 +179,7 @@ public class GamePadController
 		// fill empty spots in buttonsIdx[] with -1's
 		if (numButtons < NUM_BUTTONS)
 		{
-			System.out.println("Too few buttons (" + numButtons + "); expecting " + NUM_BUTTONS);
+			logger.info("Too few buttons (" + numButtons + "); expecting " + NUM_BUTTONS);
 			while (numButtons < NUM_BUTTONS)
 			{
 				buttonsIdx[numButtons] = -1;
@@ -212,7 +198,7 @@ public class GamePadController
 		if (!c.isAnalog() && !c.isRelative())
 		{ // digital and absolute
 			String className = c.getIdentifier().getClass().getName();
-			// System.out.println(c.getName() + " identifier: " + className);
+			// logger.info(c.getName() + " identifier: " + className);
 			if (className.endsWith("Button")) return true;
 		}
 		return false;
@@ -228,12 +214,12 @@ public class GamePadController
 		rumblers = controller.getRumblers();
 		if (rumblers.length == 0)
 		{
-			System.out.println("No Rumblers found");
+			logger.info("No Rumblers found");
 			rumblerIdx = -1;
 		}
 		else
 		{
-			System.out.println("Rumblers found: " + rumblers.length);
+			logger.info("Rumblers found: " + rumblers.length);
 			rumblerIdx = rumblers.length - 1; // use last rumbler
 		}
 	} // end of findRumblers()
@@ -251,7 +237,7 @@ public class GamePadController
 	{
 		if ((xAxisIdx == -1) || (yAxisIdx == -1))
 		{
-			System.out.println("(x,y) axis data unavailable");
+			logger.info("(x,y) axis data unavailable");
 			return NONE;
 		}
 		else return getCompassDir(xAxisIdx, yAxisIdx);
@@ -262,7 +248,7 @@ public class GamePadController
 	{
 		if ((zAxisIdx == -1) || (rzAxisIdx == -1))
 		{
-			System.out.println("(z,rz) axis data unavailable");
+			logger.info("(z,rz) axis data unavailable");
 			return NONE;
 		}
 		else return getCompassDir(zAxisIdx, rzAxisIdx);
@@ -273,7 +259,7 @@ public class GamePadController
 	{
 		float xCoord = comps[xA].getPollData();
 		float yCoord = comps[yA].getPollData();
-//		System.out.println("(x,y): (" + xCoord + "," + yCoord + ")");
+//		logger.info("(x,y): (" + xCoord + "," + yCoord + ")");
 
 		if ((xCoord == _x0  && yCoord == _y0) || (xCoord == _x1 && yCoord == _x1) && !on)
 		{
@@ -288,7 +274,7 @@ public class GamePadController
 
 		int xc = Math.round(xCoord);
 		int yc = Math.round(yCoord);
-		// System.out.println("Rounded (x,y): (" + xc + "," + yc + ")");
+		// logger.info("Rounded (x,y): (" + xc + "," + yc + ")");
 
 		if ((yc == -1) && (xc == -1)) // (y,x)
 		return NW;
@@ -302,7 +288,7 @@ public class GamePadController
 		else if ((yc == 1) && (xc == 1)) return SE;
 		else
 		{
-			System.out.println("Unknown (x,y): (" + xc + "," + yc + ")");
+			logger.info("Unknown (x,y): (" + xc + "," + yc + ")");
 			return NONE;
 		}
 	} // end of getCompassDir()
@@ -312,7 +298,7 @@ public class GamePadController
 	{
 		if (povIdx == -1)
 		{
-			System.out.println("POV hat data unavailable");
+			logger.info("POV hat data unavailable");
 			return NONE;
 		}
 		else
@@ -338,7 +324,7 @@ public class GamePadController
 			return NE;
 			else
 			{ // assume center
-				System.out.println("POV hat value out of range: " + povDir);
+				logger.info("POV hat value out of range: " + povDir);
 				return NONE;
 			}
 		}
@@ -415,7 +401,7 @@ public class GamePadController
 	{
 		if ((pos < 1) || (pos > NUM_BUTTONS))
 		{
-			System.out.println("Button position out of range (1-" + NUM_BUTTONS + "): " + pos);
+			logger.info("Button position out of range (1-" + NUM_BUTTONS + "): " + pos);
 			return false;
 		}
 
